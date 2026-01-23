@@ -8,25 +8,64 @@
   /* Full-screen dark blue background */
   body {
     margin: 0;
-    padding: 0;
+    font-family: 'Arial', sans-serif;
     background-color: #0a1f44; /* dark blue */
-    color: #fff; /* text color if needed */
-    font-family: Arial, sans-serif;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    color: #fff;
   }
 
-  /* Optional minimal content */
-  h1 {
-    font-size: 3rem;
+  /* Hero section */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     text-align: center;
-    opacity: 0.9;
+    padding: 20px;
+    background: linear-gradient(to bottom, #0a1f44 0%, #081731 100%);
+  }
+
+  .hero h1 {
+    font-size: 4rem;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .hero p {
+    font-size: 1.5rem;
+    opacity: 0.8;
+    margin-top: 10px;
+  }
+
+  /* Subtle background animation (optional) */
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: move 20s linear infinite;
+    z-index: 0;
+  }
+
+  @keyframes move {
+    0% { background-position: 0 0; }
+    100% { background-position: 100px 100px; }
+  }
+
+  .hero > * {
+    position: relative;
+    z-index: 1; /* content stays above animation */
   }
 </style>
 </head>
 <body>
-  <h1>Welcome to Things.in</h1>
+  <section class="hero">
+    <h1>Things.in</h1>
+    <p>Your minimalistic online store</p>
+  </section>
 </body>
 </html>
