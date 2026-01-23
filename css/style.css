@@ -1,158 +1,96 @@
-/* ===== RESET ===== */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* ===== BODY — PAINTERLY SKY BACKGROUND ===== */
 body {
   font-family: 'Poppins', sans-serif;
-  color: #fff;
+  color: white;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 20% 30%, rgba(255, 208, 0, 0.35), transparent 35%),
-    radial-gradient(circle at 80% 20%, rgba(255, 200, 0, 0.25), transparent 40%),
-    radial-gradient(circle at 60% 70%, rgba(255, 180, 0, 0.2), transparent 45%),
-    radial-gradient(circle at 30% 80%, rgba(255, 220, 120, 0.2), transparent 40%),
-    linear-gradient(135deg, #0b1d3a, #132c5c 40%, #1c3f7a 70%, #0a1630);
-  background-blend-mode: screen, screen, screen, screen, normal;
+    radial-gradient(circle at 70% 20%, rgba(255,210,0,0.5), transparent 40%),
+    radial-gradient(circle at 20% 30%, rgba(255,200,0,0.4), transparent 45%),
+    linear-gradient(160deg, #0a1a3a 0%, #102a54 40%, #0a1630 100%);
+  position: relative;
   overflow-x: hidden;
 }
 
-/* Swirly paint texture overlay */
+/* CANVAS TEXTURE */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: repeating-radial-gradient(
-    circle at 50% 50%,
-    rgba(255,255,255,0.03) 0px,
-    rgba(255,255,255,0.03) 2px,
-    transparent 3px,
-    transparent 6px
-  );
+  background: url("../images/canvas.jpg");
+  opacity: 0.25;
   mix-blend-mode: overlay;
   pointer-events: none;
 }
 
-/* ===== NAVBAR ===== */
+/* BRUSH STROKES LAYER */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("../images/brush.png");
+  background-size: cover;
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* NAVBAR */
 nav {
+  background: rgba(5,10,30,0.6);
+  backdrop-filter: blur(10px);
+  padding: 18px 8%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 18px 8%;
-  background: rgba(5, 10, 25, 0.65);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
 nav a {
   color: #ffd34d;
   text-decoration: none;
-  margin-left: 25px;
-  font-weight: 500;
-  transition: 0.3s;
+  margin-left: 20px;
 }
 
 nav a:hover {
-  color: #fff;
   text-shadow: 0 0 10px #ffd34d;
 }
 
-/* ===== HERO ===== */
+/* HERO */
 .hero {
   text-align: center;
-  padding: 120px 20px 80px;
+  padding: 120px 20px;
 }
 
 .hero h1 {
-  font-size: 52px;
+  font-size: 50px;
   color: #ffd34d;
-  text-shadow:
-    0 0 10px #ffcc00,
-    0 0 25px rgba(255,200,0,0.6);
+  text-shadow: 0 0 20px #ffcc00;
 }
 
-.hero p {
-  color: #d6e2ff;
-  margin-top: 10px;
-}
-
-/* ===== GRID LAYOUT ===== */
-.categories,
-.products {
+/* CARDS */
+.categories, .products {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 45px;
+  gap: 40px;
   padding: 60px 8%;
 }
 
-/* ===== CARDS ===== */
-.card,
-.product-card,
-.category-card {
-  background: rgba(10, 20, 50, 0.55);
+.category-card, .product-card {
+  background: rgba(15,25,60,0.6);
+  backdrop-filter: blur(10px);
   border-radius: 16px;
   padding: 18px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 210, 80, 0.15);
-  box-shadow:
-    0 0 20px rgba(255, 200, 0, 0.1),
-    0 0 60px rgba(0, 100, 255, 0.15);
-  transition: 0.4s ease;
-  text-align: center;
+  border: 1px solid rgba(255,200,0,0.2);
+  box-shadow: 0 0 40px rgba(255,200,0,0.1);
 }
 
-.card:hover,
-.product-card:hover,
-.category-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow:
-    0 0 30px rgba(255, 200, 0, 0.3),
-    0 0 80px rgba(0, 100, 255, 0.3);
-}
-
-/* ===== IMAGES ===== */
-.card img,
-.product-card img,
-.category-card img {
+.category-card img,
+.product-card img {
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 12px;
-  border: 2px solid rgba(255, 210, 80, 0.2);
-}
-
-/* ===== TEXT ===== */
-h2, h3 {
-  color: #ffd34d;
-}
-
-p {
-  color: #cdd9ff;
-}
-
-/* ===== BUTTON ===== */
-button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  border: none;
-  background: linear-gradient(45deg, #ffcc00, #ff8c00);
-  color: #111;
-  font-weight: bold;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 15px #ffcc00;
-}
-
-/* ===== MOBILE ===== */
-@media (max-width: 768px) {
-  .hero h1 { font-size: 36px; }
+  border-radius: 10px;
 }
