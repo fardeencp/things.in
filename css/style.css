@@ -1,51 +1,64 @@
-/* GENERAL */
-body {
+/* =======================
+   GENERAL STYLES
+======================= */
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: #f5f5f5;
-  color: #222;
+  padding: 0;
 }
 
-/* NAVBAR */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #fdfbfb, #ebedee);
+  color: #222;
+  line-height: 1.6;
+}
+
+/* =======================
+   NAVBAR
+======================= */
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 18px 50px;
   background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
 nav .brand {
-  color: white;
+  color: #fff;
   font-size: 22px;
   font-weight: 600;
 }
 
 nav .nav-links a {
-  color: white;
+  color: #fff;
   text-decoration: none;
   margin-left: 25px;
   font-weight: 500;
-  transition: color 0.3s;
+  transition: 0.3s;
 }
 
 nav .nav-links a:hover {
   color: #ff4d6d;
 }
 
-/* HERO */
+/* =======================
+   HERO SECTION
+======================= */
 .hero {
   text-align: center;
   padding: 120px 20px;
   background: linear-gradient(120deg, #1a1a1a, #2f2f2f);
-  color: white;
+  color: #fff;
+  position: relative;
 }
 
-.small-hero { padding: 80px 20px; }
+.hero.small-hero { padding: 80px 20px; }
 
 .hero h1 {
   font-size: 48px;
@@ -63,16 +76,21 @@ nav .nav-links a:hover {
   margin-top: 20px;
   padding: 12px 28px;
   background: linear-gradient(45deg, #ff4d6d, #ff758f);
-  color: white;
+  color: #fff;
   font-weight: 600;
   border-radius: 10px;
   text-decoration: none;
-  transition: transform 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.hero .cta-btn:hover { transform: scale(1.05); }
+.hero .cta-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(255,77,109,0.4);
+}
 
-/* CATEGORIES */
+/* =======================
+   CATEGORY CARDS (Homepage)
+======================= */
 .categories {
   display: flex;
   justify-content: center;
@@ -94,11 +112,23 @@ nav .nav-links a:hover {
   object-fit: cover;
   border-radius: 18px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.category-card:hover { transform: translateY(-10px); }
+.category-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+}
 
-/* PRODUCTS */
+.category-card p {
+  margin-top: 12px;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+/* =======================
+   PRODUCTS GRID
+======================= */
 .products {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -106,8 +136,11 @@ nav .nav-links a:hover {
   padding: 70px 50px;
 }
 
+/* =======================
+   PRODUCT CARD
+======================= */
 .card {
-  background: rgba(255,255,255,0.7);
+  background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);
   border-radius: 18px;
   padding: 22px;
@@ -128,23 +161,38 @@ nav .nav-links a:hover {
   border-radius: 14px;
 }
 
-.card h3 { margin: 12px 0 6px; }
-.card p { font-weight: bold; color: #ff4d6d; }
+.card h3 {
+  margin: 12px 0 6px;
+}
 
+.card p {
+  font-weight: bold;
+  color: #ff4d6d;
+}
+
+/* =======================
+   BUTTON
+======================= */
 button {
   margin-top: 12px;
   padding: 10px 20px;
   border: none;
   background: linear-gradient(45deg, #ff4d6d, #ff758f);
-  color: white;
+  color: #fff;
   border-radius: 10px;
   cursor: pointer;
-  transition: transform 0.3s;
+  font-weight: 600;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-button:hover { transform: scale(1.05); }
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(255,77,109,0.4);
+}
 
-/* RESPONSIVE */
+/* =======================
+   RESPONSIVE
+======================= */
 @media (max-width: 768px) {
   .hero h1 { font-size: 34px; }
   nav { flex-direction: column; gap: 10px; }
