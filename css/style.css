@@ -4,40 +4,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Things.in</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  /* Full-screen dark blue background */
-  body {
+  /* Reset */
+  * {
     margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #0a1f44; /* dark blue */
-    color: #fff;
+    padding: 0;
+    box-sizing: border-box;
   }
 
-  /* Hero section */
+  body, html {
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  /* Full-screen hero section */
   .hero {
+    width: 100%;
+    height: 100vh;
+    background-color: #0a1f44; /* dark blue background */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     text-align: center;
-    padding: 20px;
-    background: linear-gradient(to bottom, #0a1f44 0%, #081731 100%);
+    color: #fff;
+    position: relative;
   }
 
-  .hero h1 {
-    font-size: 4rem;
-    margin: 0;
-    font-weight: 700;
-  }
-
-  .hero p {
-    font-size: 1.5rem;
-    opacity: 0.8;
-    margin-top: 10px;
-  }
-
-  /* Subtle background animation (optional) */
+  /* Optional background image or gradient overlay */
   .hero::before {
     content: "";
     position: absolute;
@@ -45,20 +40,40 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
-    background-size: 50px 50px;
-    animation: move 20s linear infinite;
+    background: linear-gradient(to bottom right, #0a1f44, #081731);
     z-index: 0;
   }
 
-  @keyframes move {
-    0% { background-position: 0 0; }
-    100% { background-position: 100px 100px; }
+  /* Hero content */
+  .hero h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    z-index: 1;
   }
 
-  .hero > * {
-    position: relative;
-    z-index: 1; /* content stays above animation */
+  .hero p {
+    font-size: 1.5rem;
+    opacity: 0.85;
+    z-index: 1;
+  }
+
+  /* Optional call-to-action button */
+  .hero a {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 30px;
+    background-color: #1e3a8a;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background 0.3s;
+    z-index: 1;
+  }
+
+  .hero a:hover {
+    background-color: #3b5bb5;
   }
 </style>
 </head>
@@ -66,6 +81,7 @@
   <section class="hero">
     <h1>Things.in</h1>
     <p>Your minimalistic online store</p>
+    <a href="#">Shop Now</a>
   </section>
 </body>
 </html>
