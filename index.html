@@ -4,36 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Things.in</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  * {
+  body, html {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-  }
-
-  html, body {
-    height: 100%;
-    font-family: 'Montserrat', sans-serif;
     overflow: hidden;
-    background-color: #0a1f44; /* dark blue base */
-    color: #fff;
+    background-color: #0a1f44; /* dark blue */
+    height: 100%;
   }
 
   h1 {
     position: relative;
     z-index: 2;
     font-size: 4rem;
+    color: white;
     text-align: center;
     top: 40%;
+    font-family: Arial, sans-serif;
   }
 
   canvas {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
     display: block;
     z-index: 1;
   }
@@ -47,33 +40,29 @@
 const canvas = document.getElementById('starryCanvas');
 const ctx = canvas.getContext('2d');
 
-// Properly set canvas size
+// Set canvas to full screen
 function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 }
 window.addEventListener('resize', resizeCanvas);
-resizeCanvas(); // call once
+resizeCanvas();
 
 // Star class
 class Star {
   constructor() {
-    this.reset();
-  }
-
-  reset() {
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
-    this.radius = Math.random() * 1.5 + 0.5;
-    this.speed = Math.random() * 0.5 + 0.1;
-    this.opacity = Math.random();
+    this.radius = Math.random() * 2 + 1; // make stars bigger
+    this.speed = Math.random() * 0.5 + 0.2;
+    this.opacity = Math.random() * 0.8 + 0.2; // ensure visible
     this.opacityDirection = Math.random() > 0.5 ? 1 : -1;
   }
 
   draw() {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+    ctx.fillStyle = `rgba(255,255,255,${this.opacity})`;
     ctx.fill();
 
     // Move star upward
@@ -81,10 +70,10 @@ class Star {
 
     // Twinkle effect
     this.opacity += 0.005 * this.opacityDirection;
-    if (this.opacity <= 0 || this.opacity >= 1) this.opacityDirection *= -1;
+    if(this.opacity <= 0.2 || this.opacity >= 1) this.opacityDirection *= -1;
 
     // Respawn at bottom
-    if (this.y < 0) {
+    if(this.y < 0) {
       this.y = canvas.height;
       this.x = Math.random() * canvas.width;
     }
@@ -93,7 +82,7 @@ class Star {
 
 // Create stars
 const stars = [];
-for (let i = 0; i < 200; i++) {
+for(let i = 0; i < 300; i++) {
   stars.push(new Star());
 }
 
@@ -103,6 +92,7 @@ function animate() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   stars.forEach(star => star.draw());
+
   requestAnimationFrame(animate);
 }
 
