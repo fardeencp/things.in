@@ -1,4 +1,3 @@
-body { background: red !important; }
 * { margin:0; padding:0; box-sizing:border-box; }
 
 /* 🌌 VAN GOGH SKY */
@@ -180,5 +179,37 @@ body::before {
 @keyframes skyMove {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+body {
+  background: linear-gradient(120deg, #0f2027, #2c5364, #1a1a2e);
+  color: #fff;
+}
+
+.hero h1, h2 {
+  text-shadow: 0 0 20px rgba(255,200,0,0.5),
+               0 0 40px rgba(0,150,255,0.4);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  width: 2px;
+  height: 2px;
+  background: white;
+  box-shadow:
+    100px 200px white,
+    300px 400px white,
+    600px 150px white,
+    900px 300px white,
+    1200px 500px white,
+    1500px 200px white;
+  animation: twinkle 4s infinite alternate;
+  z-index: -1;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.3; }
+  to { opacity: 1; }
 }
 
