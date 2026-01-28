@@ -1,35 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Accessories</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/style.css">
-<script src="js/script.js"></script>
-</head>
-<body onload="checkUser()">
-
-<nav>
-  <div class="logo">Things.in</div>
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="cart.html">Cart</a>
-    <a href="login.html">Login</a>
-    <span id="userBox"></span>
-  </div>
-</nav>
-
 <section class="store-grid">
+
   <div class="product-card">
-    <div class="image-frame"><img src="images/accessories/bag.jpg"></div>
-    <h3>Leather Bag</h3>
-    <p class="price">₹3299</p>
-    <button class="btn" onclick="addToCart('Leather Bag',3299)">Add to Cart</button>
+    <div class="image-frame">
+      <img src="images/accessories/placeholder.jpg" alt="Bottle">
+    </div>
+    <h3>Water Bottle</h3>
+    <p class="price">₹349</p>
   </div>
+
+  <div class="product-card">
+    <div class="image-frame">
+      <img src="images/accessories/bag.jpg" alt="Bag">
+    </div>
+    <h3>Leather Bag</h3>
+    <p class="price">₹3,299</p>
+  </div>
+
 </section>
-
-<div id="imgModal" class="modal" onclick="closeModal()">
-  <img id="modalImg">
-</div>
-
-</body>
-</html>
