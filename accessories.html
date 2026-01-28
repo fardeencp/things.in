@@ -47,26 +47,26 @@
   to{opacity:1;}
 }
 
-/* REFINED ARROWS */
+/* ARROWS */
 .arrow{
   position:absolute;
   top:50%;
   transform:translateY(-50%);
-  font-size:22px;
-  color:#444;                      /* darker grey */
-  background:rgba(255,255,255,0.7); /* soft background */
-  padding:5px 9px;
+  font-size:26px;
+  color:#222;                      /* visible dark grey */
+  background:rgba(255,255,255,0.6); /* soft background */
+  padding:6px 10px;
   border-radius:50%;
   cursor:pointer;
-  opacity:0.7;                     /* ALWAYS visible */
+  opacity:0.8;                     /* clearly visible */
   transition:0.3s;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(2px);
+  z-index:10;
 }
 
-.left{ left:-18px; }
-.right{ right:-18px; }
+.left{ left:-25px; }
+.right{ right:-25px; }
 
-/* Slight highlight on hover */
 .arrow:hover{
   opacity:1;
   background:rgba(255,255,255,0.9);
@@ -141,6 +141,7 @@ function changeSlide(step){
   showSlide(current);
 }
 
+/* TOUCH SWIPE */
 let startX = 0;
 const slider = document.getElementById("slider");
 
@@ -154,6 +155,7 @@ slider.addEventListener("touchend", e=>{
   if(endX - startX > 50) changeSlide(-1);
 });
 
+/* MOUSE DRAG */
 let isDown = false;
 
 slider.addEventListener("mousedown", e=>{
