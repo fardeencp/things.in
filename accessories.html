@@ -37,5 +37,32 @@
 
 </section>
 
+<!-- IMAGE POPUP MODAL -->
+<div id="imgModal" class="modal">
+  <span onclick="closeModal()">&times;</span>
+  <img id="modalImg">
+</div>
+
+<script>
+const images = document.querySelectorAll(".image-frame img");
+const modal = document.getElementById("imgModal");
+const modalImg = document.getElementById("modalImg");
+
+images.forEach(img => {
+  img.addEventListener("click", () => {
+    modal.style.display = "flex";
+    modalImg.src = img.src;
+  });
+});
+
+function closeModal() {
+  modal.style.display = "none";
+}
+
+modal.addEventListener("click", (e) => {
+  if (e.target !== modalImg) closeModal();
+});
+</script>
+
 </body>
 </html>
