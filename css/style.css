@@ -51,12 +51,17 @@ nav {
   font-weight: 600;
 }
 
+/* WRAPPER TO REMOVE CHECKS BEHIND CATEGORY BUTTONS */
+.categories-wrapper {
+  background: white; /* overrides the body check pattern */
+  padding: 40px 0;  /* optional spacing around buttons */
+}
+
 /* CATEGORY BUTTONS */
 .categories {
   display: flex;
   justify-content: center;
   gap: 40px;
-  padding: 60px 10%;
   flex-wrap: wrap;
 }
 
