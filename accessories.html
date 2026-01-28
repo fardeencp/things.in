@@ -21,7 +21,7 @@
 
   <div class="product-card">
     <div class="image-frame">
-      <img src="images/accessories/placeholder.jpg" alt="Bottle">
+      <img src="images/accessories/placeholder.jpg" alt="Water Bottle">
     </div>
     <h3>Water Bottle</h3>
     <p class="price">₹349</p>
@@ -29,13 +29,34 @@
 
   <div class="product-card">
     <div class="image-frame">
-      <img src="images/accessories/bag.jpg" alt="Bag">
+      <img src="images/accessories/bag.jpg" alt="Leather Bag">
     </div>
     <h3>Leather Bag</h3>
     <p class="price">₹3,299</p>
   </div>
 
 </section>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+  <img id="popupImg">
+</div>
+
+<script>
+const popup = document.getElementById("popup");
+const popupImg = document.getElementById("popupImg");
+
+document.querySelectorAll(".image-frame img").forEach(img => {
+  img.addEventListener("click", () => {
+    popup.style.display = "flex";
+    popupImg.src = img.src;
+  });
+});
+
+popup.addEventListener("click", () => {
+  popup.style.display = "none";
+});
+</script>
 
 </body>
 </html>
