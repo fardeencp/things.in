@@ -5,15 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Apparels - Things.in</title>
 <link rel="stylesheet" href="css/style.css">
+<script src="js/script.js"></script>
 </head>
 
-<body>
+<body onload="checkUser()">
 
 <nav>
   <div class="logo">Things.in</div>
   <div class="nav-links">
     <a href="index.html">Home</a>
-    <a href="accessories.html">Accessories</a>
+    <a href="cart.html">Cart</a>
+    <a href="login.html">Login</a>
+    <span id="userBox"></span>
   </div>
 </nav>
 
@@ -21,56 +24,27 @@
 
   <div class="product-card">
     <div class="image-frame">
-      <img src="images/apparels/placeholder.jpg" alt="Tshirt">
+      <img src="images/apparels/placeholder.jpg">
     </div>
     <h3>Anime Printed Tshirt</h3>
     <p class="price">₹449</p>
+    <button class="btn" onclick="addToCart('Anime Tshirt', 449)">Add to Cart</button>
   </div>
 
   <div class="product-card">
     <div class="image-frame">
-      <img src="images/apparels/tshirt-black.jpg" alt="Tshirt">
+      <img src="images/apparels/tshirt-black.jpg">
     </div>
     <h3>Black T-Shirt</h3>
     <p class="price">₹449</p>
-  </div>
-
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/jeans-blue.jpg" alt="Jeans">
-    </div>
-    <h3>Blue Jeans</h3>
-    <p class="price">₹559</p>
+    <button class="btn" onclick="addToCart('Black T-Shirt', 449)">Add to Cart</button>
   </div>
 
 </section>
 
-<!-- IMAGE POPUP MODAL -->
-<div id="imgModal" class="modal">
-  <span onclick="closeModal()">&times;</span>
+<div id="imgModal" class="modal" onclick="closeModal()">
   <img id="modalImg">
 </div>
-
-<script>
-const images = document.querySelectorAll(".image-frame img");
-const modal = document.getElementById("imgModal");
-const modalImg = document.getElementById("modalImg");
-
-images.forEach(img => {
-  img.addEventListener("click", () => {
-    modal.style.display = "flex";
-    modalImg.src = img.src;
-  });
-});
-
-function closeModal() {
-  modal.style.display = "none";
-}
-
-modal.addEventListener("click", (e) => {
-  if (e.target !== modalImg) closeModal();
-});
-</script>
 
 </body>
 </html>
