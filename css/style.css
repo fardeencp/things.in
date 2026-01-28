@@ -6,13 +6,13 @@
   font-family: Arial, sans-serif;
 }
 
-/* LIGHT THEME WITH SOFT CHECKS */
+/* LIGHT THEME WITH VISIBLE BLACK CHECKS */
 body {
   background-color: white; /* fallback */
   background-image: 
-    linear-gradient(0deg, rgba(0,0,0,0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);
-  background-size: 30px 30px; /* larger and softer squares */
+    linear-gradient(0deg, rgba(0,0,0,0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.15) 1px, transparent 1px);
+  background-size: 30px 30px; /* size of each square */
   color: #0a1f44; /* deep brand blue */
   min-height: 100vh;
 }
