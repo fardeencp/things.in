@@ -1,35 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Apparels</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apparels - Things.in</title>
 <link rel="stylesheet" href="css/style.css">
-<script src="js/script.js"></script>
 </head>
-<body onload="checkUser()">
+
+<body>
 
 <nav>
   <div class="logo">Things.in</div>
   <div class="nav-links">
     <a href="index.html">Home</a>
-    <a href="cart.html">Cart</a>
-    <a href="login.html">Login</a>
-    <span id="userBox"></span>
+    <a href="accessories.html">Accessories</a>
   </div>
 </nav>
 
 <section class="store-grid">
+
   <div class="product-card">
-    <div class="image-frame"><img src="images/apparels/placeholder.jpg"></div>
+    <div class="image-frame">
+      <img src="images/apparels/placeholder.jpg" alt="Anime Printed Tshirt">
+    </div>
     <h3>Anime Printed Tshirt</h3>
     <p class="price">₹449</p>
-    <button class="btn" onclick="addToCart('Anime Tshirt',449)">Add to Cart</button>
   </div>
-</section>
 
-<div id="imgModal" class="modal" onclick="closeModal()">
-  <img id="modalImg">
-</div>
+  <div class="product-card">
+    <div class="image-frame">
+      <img src="images/apparels/tshirt-black.jpg" alt="Black T-Shirt">
+    </div>
+    <h3>Black T-Shirt</h3>
+    <p class="price">₹449</p>
+  </div>
+
+  <div class="product-card">
+    <div class="image-frame">
+      <img src="images/apparels/jeans-blue.jpg" alt="Blue Jeans">
+    </div>
+    <h3>Blue Jeans</h3>
+    <p class="price">₹559</p>
+  </div>
+
+</section>
 
 </body>
 </html>
