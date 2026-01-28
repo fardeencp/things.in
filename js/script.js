@@ -72,7 +72,7 @@ function proceedToOrder(){
 
   msg += `%0ATotal: ₹${total}`;
 
-  const phone = "91XXXXXXXXXX"; // PUT YOUR NUMBER
+  const phone = "9961365304"; // PUT YOUR NUMBER
   window.open(`https://wa.me/${phone}?text=${msg}`, "_blank");
 }
 
