@@ -1,10 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Accessories - Things.in</title>
-<link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Accessories | Things.in</title>
+<link rel="stylesheet" href="css/style.css"/>
+
+<style>
+/* Page Layout */
+.page-title{
+  text-align:center;
+  font-size:28px;
+  margin:30px 0;
+}
+
+.product-grid{
+  display:flex;
+  justify-content:center;
+  padding:20px;
+}
+
+.product-card{
+  width:260px;
+  text-align:center;
+  cursor:pointer;
+}
+
+.product-card img{
+  width:100%;
+  border-radius:12px;
+  transition:transform 0.3s ease;
+}
+
+.product-card:hover img{
+  transform:scale(1.05);
+}
+
+.product-name{
+  margin-top:10px;
+  font-size:16px;
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  z-index:999;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-content{
+  position:relative;
+  max-width:90%;
+  max-height:85%;
+}
+
+.modal img{
+  width:100%;
+  max-height:80vh;
+  object-fit:contain;
+  border-radius:10px;
+  animation:zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn{
+  from{transform:scale(0.7); opacity:0;}
+  to{transform:scale(1); opacity:1;}
+}
+
+.close{
+  position:absolute;
+  top:-35px;
+  right:0;
+  font-size:28px;
+  color:white;
+  cursor:pointer;
+}
+
+/* Arrows */
+.arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:40px;
+  color:white;
+  cursor:pointer;
+  user-select:none;
+  padding:10px;
+}
+
+.left{ left:-50px; }
+.right{ right:-50px; }
+
+@media(max-width:600px){
+  .arrow{font-size:30px;}
+  .left{left:-30px;}
+  .right{right:-30px;}
+}
+</style>
 </head>
 
 <body>
@@ -17,45 +113,53 @@
   </div>
 </nav>
 
-<section class="store-grid">
+<h2 class="page-title">Accessories</h2>
 
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/accessories/placeholder.jpg" alt="Water Bottle">
-    </div>
-    <h3>Water Bottle</h3>
-    <p class="price">₹349</p>
+<section class="product-grid">
+  <div class="product-card" onclick="openModal(3)">
+    <img src="images/accessories/pandabottle4.png" alt="Panda Bottle">
+    <div class="product-name">Panda Bottle</div>
   </div>
-
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/accessories/bag.jpg" alt="Leather Bag">
-    </div>
-    <h3>Leather Bag</h3>
-    <p class="price">₹3,299</p>
-  </div>
-
 </section>
 
-<!-- POPUP -->
-<div class="popup" id="popup">
-  <img id="popupImg">
+<!-- IMAGE MODAL -->
+<div class="modal" id="imgModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <span class="arrow left" onclick="changeSlide(-1)">&#10094;</span>
+    <img id="modalImg">
+    <span class="arrow right" onclick="changeSlide(1)">&#10095;</span>
+  </div>
 </div>
 
 <script>
-const popup = document.getElementById("popup");
-const popupImg = document.getElementById("popupImg");
+const images = [
+  "images/accessories/pandabottle1.png",
+  "images/accessories/pandabottle2.png",
+  "images/accessories/pandabottle3.png",
+  "images/accessories/pandabottle4.png",
+  "images/accessories/pandabottle5.png",
+  "images/accessories/pandabottle6.png"
+];
 
-document.querySelectorAll(".image-frame img").forEach(img => {
-  img.addEventListener("click", () => {
-    popup.style.display = "flex";
-    popupImg.src = img.src;
-  });
-});
+let currentIndex = 0;
 
-popup.addEventListener("click", () => {
-  popup.style.display = "none";
-});
+function openModal(index){
+  currentIndex = index;
+  document.getElementById("modalImg").src = images[currentIndex];
+  document.getElementById("imgModal").style.display = "flex";
+}
+
+function closeModal(){
+  document.getElementById("imgModal").style.display = "none";
+}
+
+function changeSlide(step){
+  currentIndex += step;
+  if(currentIndex < 0) currentIndex = images.length - 1;
+  if(currentIndex >= images.length) currentIndex = 0;
+  document.getElementById("modalImg").src = images[currentIndex];
+}
 </script>
 
 </body>
