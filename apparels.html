@@ -7,23 +7,7 @@
 <link rel="stylesheet" href="css/style.css">
 
 <style>
-/* CART BUTTONS */
-.cart-icon{
-  position:relative;
-  text-decoration:none;
-  font-size:20px;
-}
-.cart-count{
-  position:absolute;
-  top:-8px;
-  right:-10px;
-  background:#0a1f44;
-  color:white;
-  font-size:12px;
-  padding:2px 6px;
-  border-radius:50%;
-}
-
+/* ADD TO CART */
 .add-cart-btn{
   margin-top:8px;
   padding:8px 14px;
@@ -35,6 +19,27 @@
   background:#0a1f44;
   color:white;
 }
+
+/* IMAGE ZOOM MODAL */
+.modal {
+  display:none;
+  position:fixed;
+  z-index:1000;
+  left:0; top:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.85);
+  justify-content:center;
+  align-items:center;
+}
+.modal img {
+  max-width:92%;
+  max-height:92%;
+  transform: scale(0.7);
+  transition: transform 0.35s ease;
+}
+.modal.show img {
+  transform: scale(1);
+}
 </style>
 </head>
 
@@ -44,158 +49,67 @@
   <div class="logo">Things.in</div>
   <div class="nav-links">
     <a href="index.html">Home</a>
-    <a href="accessories.html">Accessories</a>
-    <a href="cart.html" class="cart-icon">🛒<span class="cart-count" id="cart-count">0</span></a>
+    <a href="cart.html">🛒</a>
   </div>
 </nav>
 
 <section class="store-grid">
 
-  <!-- Anime Printed Tshirt -->
   <div class="product-card">
     <div class="image-frame">
-      <img src="images/apparels/animetshirt.jpg" alt="Tshirt">
+      <img src="images/apparels/shirt1.png" onclick="openModal(this.src)">
     </div>
-    <h3>Anime Printed Tshirt</h3>
-    <p class="price">₹449</p>
-    <button class="add-cart-btn" onclick="addToCart('Anime Printed Tshirt',449,'images/apparels/animetshirt.jpg')">Add to Cart</button>
+    <h3>Classic Tee</h3>
+    <p class="price">₹599</p>
+    <button class="add-cart-btn"
+      onclick="addToCart('Classic Tee',599,'images/apparels/shirt1.png')">
+      Add to Cart
+    </button>
   </div>
 
-  <!-- Black T-Shirt -->
   <div class="product-card">
     <div class="image-frame">
-      <img src="images/apparels/blackkoreanpant.jpg" alt="Black Pant">
+      <img src="images/apparels/shirt2.png" onclick="openModal(this.src)">
     </div>
-    <h3>Black Korean Pant</h3>
-    <p class="price">₹559</p>
-    <button class="add-cart-btn" onclick="addToCart('Black Korean Pant',559,'images/apparels/blackkoreanpant.jpg')">Add to Cart</button>
-  </div>
-
-  <!-- Blue Sundress -->
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/bluesundress.png" alt="Blue Sundress">
-    </div>
-    <h3>Blue Sundress</h3>
-    <p class="price">₹799</p>
-    <button class="add-cart-btn" onclick="addToCart('Blue Sundress',799,'images/apparels/bluesundress.png')">Add to Cart</button>
-  </div>
-
-  <!-- Brown Korean Pant -->
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/brownkoreanpant.jpg" alt="Brown Pant">
-    </div>
-    <h3>Brown Korean Pant</h3>
-    <p class="price">₹559</p>
-    <button class="add-cart-btn" onclick="addToCart('Brown Korean Pant',559,'images/apparels/brownkoreanpant.jpg')">Add to Cart</button>
-  </div>
-
-  <!-- Cream Korean Pants -->
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/creamkoreanpants.jpg" alt="Cream Pant">
-    </div>
-    <h3>Cream Korean Pants</h3>
-    <p class="price">₹559</p>
-    <button class="add-cart-btn" onclick="addToCart('Cream Korean Pants',559,'images/apparels/creamkoreanpants.jpg')">Add to Cart</button>
-  </div>
-
-  <!-- Grey Bonkers Track -->
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/greybonkerstrack.jpg" alt="Grey Track">
-    </div>
-    <h3>Grey Bonkers Track</h3>
+    <h3>Oversized Tee</h3>
     <p class="price">₹699</p>
-    <button class="add-cart-btn" onclick="addToCart('Grey Bonkers Track',699,'images/apparels/greybonkerstrack.jpg')">Add to Cart</button>
-  </div>
-
-  <!-- Light Blue Jeans -->
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/lightbluejean.jpg" alt="Light Blue Jeans">
-    </div>
-    <h3>Light Blue Jeans</h3>
-    <p class="price">₹559</p>
-    <button class="add-cart-btn" onclick="addToCart('Light Blue Jeans',559,'images/apparels/lightbluejean.jpg')">Add to Cart</button>
-  </div>
-
-  <!-- Red Sundress -->
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/redsundress.png" alt="Red Sundress">
-    </div>
-    <h3>Red Sundress</h3>
-    <p class="price">₹799</p>
-    <button class="add-cart-btn" onclick="addToCart('Red Sundress',799,'images/apparels/redsundress.png')">Add to Cart</button>
-  </div>
-
-  <!-- Washed Out Jeans -->
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/washedoutjeans.png" alt="Washed Out Jeans">
-    </div>
-    <h3>Washed Out Jeans</h3>
-    <p class="price">₹559</p>
-    <button class="add-cart-btn" onclick="addToCart('Washed Out Jeans',559,'images/apparels/washedoutjeans.png')">Add to Cart</button>
-  </div>
-
-  <!-- White Bonkers Track -->
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/whitebonkerstrack.png" alt="White Track">
-    </div>
-    <h3>White Bonkers Track</h3>
-    <p class="price">₹699</p>
-    <button class="add-cart-btn" onclick="addToCart('White Bonkers Track',699,'images/apparels/whitebonkerstrack.png')">Add to Cart</button>
-  </div>
-
-  <!-- Yellow Sundress -->
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/yellowsundress.jpg" alt="Yellow Sundress">
-    </div>
-    <h3>Yellow Sundress</h3>
-    <p class="price">₹799</p>
-    <button class="add-cart-btn" onclick="addToCart('Yellow Sundress',799,'images/apparels/yellowsundress.jpg')">Add to Cart</button>
+    <button class="add-cart-btn"
+      onclick="addToCart('Oversized Tee',699,'images/apparels/shirt2.png')">
+      Add to Cart
+    </button>
   </div>
 
 </section>
 
+<!-- ZOOM MODAL -->
+<div class="modal" id="imgModal" onclick="closeModal()">
+  <img id="modalImg">
+</div>
+
 <script>
+function openModal(src){
+  const modal = document.getElementById("imgModal");
+  const img = document.getElementById("modalImg");
+  img.src = src;
+  modal.style.display = "flex";
+  setTimeout(()=>modal.classList.add("show"),10);
+}
+function closeModal(){
+  const modal = document.getElementById("imgModal");
+  modal.classList.remove("show");
+  setTimeout(()=>modal.style.display="none",300);
+}
+
 /* CART SYSTEM */
 function getCart(){return JSON.parse(localStorage.getItem("cart"))||[];}
-function saveCart(cart){localStorage.setItem("cart",JSON.stringify(cart));updateCount();}
-function updateCount(){const cart=getCart();let totalQty=0;cart.forEach(i=>totalQty+=Number(i.qty||0));document.getElementById("cart-count").innerText=totalQty;}
-
-/* MINIMAL POPUP FOR ADD TO CART */
-function showPopup(msg){
-  const pop=document.createElement("div");
-  pop.innerText=msg;
-  pop.style.position="fixed";
-  pop.style.bottom="20px";
-  pop.style.left="50%";
-  pop.style.transform="translateX(-50%)";
-  pop.style.color="black";
-  pop.style.fontSize="14px";
-  pop.style.zIndex="9999";
-  document.body.appendChild(pop);
-  setTimeout(()=>pop.remove(),1500);
-}
-
-/* ADD TO CART FUNCTION */
+function saveCart(cart){localStorage.setItem("cart",JSON.stringify(cart));}
 function addToCart(name,price,img){
-  price=Number(price);
   let cart=getCart();
   let item=cart.find(p=>p.name===name);
-  if(item){item.qty=Number(item.qty)+1;}
+  if(item){item.qty++;}
   else{cart.push({name,price,img,qty:1});}
   saveCart(cart);
-  showPopup("Added to cart");
 }
-
-updateCount();
 </script>
 
 </body>
