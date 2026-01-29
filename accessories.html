@@ -1,12 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Apparels | Things.in</title>
-<link rel="stylesheet" href="css/style.css"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accessories - Things.in</title>
+<link rel="stylesheet" href="css/style.css">
 
 <style>
+/* SLIDER INSIDE PRODUCT FRAME */
+.slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slide-track {
+  display: flex;
+  transition: transform 0.4s ease;
+  height: 100%;
+}
+
+.slide-track img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Subtle arrows */
+.slide-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.15);
+  border: none;
+  color: white;
+  font-size: 18px;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.slide-btn:hover {
+  opacity: 1;
+}
+
+/* CART BUTTON SAME AS APPARELS */
 .cart-icon{
   position:relative;
   text-decoration:none;
@@ -43,123 +84,81 @@
   <div class="logo">Things.in</div>
   <div class="nav-links">
     <a href="index.html">Home</a>
-    <a href="accessories.html">Accessories</a>
+    <a href="apparels.html">Apparels</a>
     <a href="cart.html" class="cart-icon">🛒<span class="cart-count" id="cart-count">0</span></a>
   </div>
 </nav>
 
 <section class="store-grid">
 
+  <!-- PANDA BOTTLE PRODUCT -->
   <div class="product-card">
     <div class="image-frame">
-      <img src="images/apparels/animetshirt.jpg">
-    </div>
-    <h3>Anime Printed Tshirt</h3>
-    <p class="price">₹449</p>
-    <button class="add-cart-btn" onclick="addToCart('Anime Printed Tshirt',449,'images/apparels/animetshirt.jpg')">Add to Cart</button>
-  </div>
+      <div class="slider">
+        <div class="slide-track" id="pandaTrack">
 
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/blackkoreanpant.jpg">
-    </div>
-    <h3>Black Korean Pant</h3>
-    <p class="price">₹799</p>
-    <button class="add-cart-btn" onclick="addToCart('Black Korean Pant',799,'images/apparels/blackkoreanpant.jpg')">Add to Cart</button>
-  </div>
+          <!-- MAIN IMAGE FIRST -->
+          <img src="images/accessories/pandabottle4.png" alt="">
+          <img src="images/accessories/pandabottle1.png" alt="">
+          <img src="images/accessories/pandabottle2.png" alt="">
+          <img src="images/accessories/pandabottle3.png" alt="">
+          <img src="images/accessories/pandabottle5.png" alt="">
+          <img src="images/accessories/pandabottle6.png" alt="">
 
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/bluesundress.png">
-    </div>
-    <h3>Blue Sun Dress</h3>
-    <p class="price">₹699</p>
-    <button class="add-cart-btn" onclick="addToCart('Blue Sun Dress',699,'images/apparels/bluesundress.png')">Add to Cart</button>
-  </div>
+        </div>
 
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/brownkoreanpant.jpg">
+        <button class="slide-btn prev" onclick="moveSlide(-1)">‹</button>
+        <button class="slide-btn next" onclick="moveSlide(1)">›</button>
+      </div>
     </div>
-    <h3>Brown Korean Pant</h3>
-    <p class="price">₹799</p>
-    <button class="add-cart-btn" onclick="addToCart('Brown Korean Pant',799,'images/apparels/brownkoreanpant.jpg')">Add to Cart</button>
-  </div>
 
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/creamkoreanpants.jpg">
-    </div>
-    <h3>Cream Korean Pants</h3>
-    <p class="price">₹799</p>
-    <button class="add-cart-btn" onclick="addToCart('Cream Korean Pants',799,'images/apparels/creamkoreanpants.jpg')">Add to Cart</button>
-  </div>
-
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/greybonkerstrack.jpg">
-    </div>
-    <h3>Grey Bonkers Track</h3>
-    <p class="price">₹599</p>
-    <button class="add-cart-btn" onclick="addToCart('Grey Bonkers Track',599,'images/apparels/greybonkerstrack.jpg')">Add to Cart</button>
-  </div>
-
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/lightbluejean.jpg">
-    </div>
-    <h3>Light Blue Jeans</h3>
-    <p class="price">₹899</p>
-    <button class="add-cart-btn" onclick="addToCart('Light Blue Jeans',899,'images/apparels/lightbluejean.jpg')">Add to Cart</button>
-  </div>
-
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/redsundress.png">
-    </div>
-    <h3>Red Sun Dress</h3>
-    <p class="price">₹699</p>
-    <button class="add-cart-btn" onclick="addToCart('Red Sun Dress',699,'images/apparels/redsundress.png')">Add to Cart</button>
-  </div>
-
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/washedoutjeans.png">
-    </div>
-    <h3>Washed Out Jeans</h3>
-    <p class="price">₹899</p>
-    <button class="add-cart-btn" onclick="addToCart('Washed Out Jeans',899,'images/apparels/washedoutjeans.png')">Add to Cart</button>
-  </div>
-
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/whitebonkerstrack.png">
-    </div>
-    <h3>White Bonkers Track</h3>
-    <p class="price">₹599</p>
-    <button class="add-cart-btn" onclick="addToCart('White Bonkers Track',599,'images/apparels/whitebonkerstrack.png')">Add to Cart</button>
-  </div>
-
-  <div class="product-card">
-    <div class="image-frame">
-      <img src="images/apparels/yellowsundress.jpg">
-    </div>
-    <h3>Yellow Sun Dress</h3>
-    <p class="price">₹699</p>
-    <button class="add-cart-btn" onclick="addToCart('Yellow Sun Dress',699,'images/apparels/yellowsundress.jpg')">Add to Cart</button>
+    <h3>Panda Bottle</h3>
+    <p class="price">₹399</p>
+    <button class="add-cart-btn" onclick="addToCart('Panda Bottle',399,'images/accessories/pandabottle4.png')">Add to Cart</button>
   </div>
 
 </section>
 
 <script>
+let index = 0;
+const track = document.getElementById("pandaTrack");
+const totalSlides = track.children.length;
+
+function moveSlide(direction) {
+  index += direction;
+
+  if (index < 0) index = totalSlides - 1;
+  if (index >= totalSlides) index = 0;
+
+  track.style.transform = `translateX(-${index * 100}%)`;
+}
+
+/* CART SYSTEM */
 function getCart(){return JSON.parse(localStorage.getItem("cart"))||[];}
-function saveCart(c){localStorage.setItem("cart",JSON.stringify(c));updateCount();}
-function updateCount(){document.getElementById("cart-count").innerText=getCart().reduce((a,b)=>a+b.qty,0);}
+function saveCart(cart){localStorage.setItem("cart",JSON.stringify(cart));updateCount();}
+function updateCount(){const cart=getCart();let totalQty=0;cart.forEach(i=>totalQty+=Number(i.qty||0));document.getElementById("cart-count").innerText=totalQty;}
+function showPopup(msg){
+  const pop=document.createElement("div");
+  pop.innerText=msg;
+  pop.style.position="fixed";
+  pop.style.bottom="20px";
+  pop.style.left="50%";
+  pop.style.transform="translateX(-50%)";
+  pop.style.color="black";
+  pop.style.fontSize="14px";
+  pop.style.zIndex="9999";
+  document.body.appendChild(pop);
+  setTimeout(()=>pop.remove(),1500);
+}
+
 function addToCart(name,price,img){
+  price=Number(price);
   let cart=getCart();
   let item=cart.find(p=>p.name===name);
-  if(item)item.qty++; else cart.push({name,price,img,qty:1});
+  if(item){item.qty=Number(item.qty)+1;}
+  else{cart.push({name,price,img,qty:1});}
   saveCart(cart);
+  showPopup("Added to cart");
 }
 updateCount();
 </script>
