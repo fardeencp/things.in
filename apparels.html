@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="css/style.css">
 
 <style>
+/* CART BUTTONS */
 .cart-icon{
   position:relative;
   text-decoration:none;
@@ -23,30 +24,46 @@
   border-radius:50%;
 }
 
-/* MINIMAL BUTTON */
+/* MINIMAL ADD TO CART BUTTON */
 .add-cart-btn{
   margin-top:8px;
-  padding:6px 0;
-  border:none;
-  background:none;
+  padding:6px 14px;
+  border:1px solid #0a1f44;
+  background:white;
   color:#0a1f44;
   cursor:pointer;
   font-size:14px;
-  font-weight:500;
+  transition:0.2s;
 }
 .add-cart-btn:hover{
-  text-decoration:underline;
+  background:#0a1f44;
+  color:white;
 }
 
-/* Added! message */
+/* ADDED MESSAGE */
 .added-msg{
-  margin-left:8px;
-  font-size:14px;
+  font-size:12px;
+  background:black;
+  color:white;
+  padding:3px 8px;
+  border-radius:3px;
   opacity:0;
-  transition:opacity 0.4s ease;
+  transform:translateY(2px);
+  transition:opacity 0.35s ease, transform 0.35s ease;
+  white-space: nowrap;
+  margin-left:8px;
 }
 .added-msg.show{
   opacity:1;
+  transform:translateY(0);
+}
+
+/* CART ACTION CONTAINER */
+.cart-action{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
 }
 </style>
 </head>
@@ -63,26 +80,29 @@
 
 <section class="store-grid">
 
-  <!-- PRODUCT TEMPLATE START -->
-
+  <!-- PRODUCT LIST -->
   <div class="product-card">
     <div class="image-frame">
-      <img src="images/apparels/animetshirt.jpg" alt="Anime Tshirt">
+      <img src="images/apparels/animetshirt.jpg" alt="Anime Printed Tshirt">
     </div>
     <h3>Anime Printed Tshirt</h3>
     <p class="price">₹449</p>
-    <button class="add-cart-btn" onclick="addToCart(this,'Anime Printed Tshirt',449,'images/apparels/animetshirt.jpg')">Add to Cart</button>
-    <span class="added-msg">Added!</span>
+    <div class="cart-action">
+      <button class="add-cart-btn" onclick="addToCart(this,'Anime Printed Tshirt',449,'images/apparels/animetshirt.jpg')">Add to Cart</button>
+      <span class="added-msg">Added!</span>
+    </div>
   </div>
 
   <div class="product-card">
     <div class="image-frame">
-      <img src="images/apparels/blackkoreanpant.jpg" alt="Black Pant">
+      <img src="images/apparels/blackkoreanpant.jpg" alt="Black Korean Pant">
     </div>
     <h3>Black Korean Pant</h3>
     <p class="price">₹559</p>
-    <button class="add-cart-btn" onclick="addToCart(this,'Black Korean Pant',559,'images/apparels/blackkoreanpant.jpg')">Add to Cart</button>
-    <span class="added-msg">Added!</span>
+    <div class="cart-action">
+      <button class="add-cart-btn" onclick="addToCart(this,'Black Korean Pant',559,'images/apparels/blackkoreanpant.jpg')">Add to Cart</button>
+      <span class="added-msg">Added!</span>
+    </div>
   </div>
 
   <div class="product-card">
@@ -91,38 +111,46 @@
     </div>
     <h3>Blue Sundress</h3>
     <p class="price">₹799</p>
-    <button class="add-cart-btn" onclick="addToCart(this,'Blue Sundress',799,'images/apparels/bluesundress.png')">Add to Cart</button>
-    <span class="added-msg">Added!</span>
+    <div class="cart-action">
+      <button class="add-cart-btn" onclick="addToCart(this,'Blue Sundress',799,'images/apparels/bluesundress.png')">Add to Cart</button>
+      <span class="added-msg">Added!</span>
+    </div>
   </div>
 
   <div class="product-card">
     <div class="image-frame">
-      <img src="images/apparels/brownkoreanpant.jpg" alt="Brown Pant">
+      <img src="images/apparels/brownkoreanpant.jpg" alt="Brown Korean Pant">
     </div>
     <h3>Brown Korean Pant</h3>
     <p class="price">₹559</p>
-    <button class="add-cart-btn" onclick="addToCart(this,'Brown Korean Pant',559,'images/apparels/brownkoreanpant.jpg')">Add to Cart</button>
-    <span class="added-msg">Added!</span>
+    <div class="cart-action">
+      <button class="add-cart-btn" onclick="addToCart(this,'Brown Korean Pant',559,'images/apparels/brownkoreanpant.jpg')">Add to Cart</button>
+      <span class="added-msg">Added!</span>
+    </div>
   </div>
 
   <div class="product-card">
     <div class="image-frame">
-      <img src="images/apparels/creamkoreanpants.jpg" alt="Cream Pant">
+      <img src="images/apparels/creamkoreanpants.jpg" alt="Cream Korean Pants">
     </div>
     <h3>Cream Korean Pants</h3>
     <p class="price">₹559</p>
-    <button class="add-cart-btn" onclick="addToCart(this,'Cream Korean Pants',559,'images/apparels/creamkoreanpants.jpg')">Add to Cart</button>
-    <span class="added-msg">Added!</span>
+    <div class="cart-action">
+      <button class="add-cart-btn" onclick="addToCart(this,'Cream Korean Pants',559,'images/apparels/creamkoreanpants.jpg')">Add to Cart</button>
+      <span class="added-msg">Added!</span>
+    </div>
   </div>
 
   <div class="product-card">
     <div class="image-frame">
-      <img src="images/apparels/greybonkerstrack.jpg" alt="Grey Track">
+      <img src="images/apparels/greybonkerstrack.jpg" alt="Grey Bonkers Track">
     </div>
     <h3>Grey Bonkers Track</h3>
     <p class="price">₹699</p>
-    <button class="add-cart-btn" onclick="addToCart(this,'Grey Bonkers Track',699,'images/apparels/greybonkerstrack.jpg')">Add to Cart</button>
-    <span class="added-msg">Added!</span>
+    <div class="cart-action">
+      <button class="add-cart-btn" onclick="addToCart(this,'Grey Bonkers Track',699,'images/apparels/greybonkerstrack.jpg')">Add to Cart</button>
+      <span class="added-msg">Added!</span>
+    </div>
   </div>
 
   <div class="product-card">
@@ -131,8 +159,10 @@
     </div>
     <h3>Light Blue Jeans</h3>
     <p class="price">₹559</p>
-    <button class="add-cart-btn" onclick="addToCart(this,'Light Blue Jeans',559,'images/apparels/lightbluejean.jpg')">Add to Cart</button>
-    <span class="added-msg">Added!</span>
+    <div class="cart-action">
+      <button class="add-cart-btn" onclick="addToCart(this,'Light Blue Jeans',559,'images/apparels/lightbluejean.jpg')">Add to Cart</button>
+      <span class="added-msg">Added!</span>
+    </div>
   </div>
 
   <div class="product-card">
@@ -141,28 +171,34 @@
     </div>
     <h3>Red Sundress</h3>
     <p class="price">₹799</p>
-    <button class="add-cart-btn" onclick="addToCart(this,'Red Sundress',799,'images/apparels/redsundress.png')">Add to Cart</button>
-    <span class="added-msg">Added!</span>
+    <div class="cart-action">
+      <button class="add-cart-btn" onclick="addToCart(this,'Red Sundress',799,'images/apparels/redsundress.png')">Add to Cart</button>
+      <span class="added-msg">Added!</span>
+    </div>
   </div>
 
   <div class="product-card">
     <div class="image-frame">
-      <img src="images/apparels/washedoutjeans.png" alt="Washed Jeans">
+      <img src="images/apparels/washedoutjeans.png" alt="Washed Out Jeans">
     </div>
     <h3>Washed Out Jeans</h3>
     <p class="price">₹559</p>
-    <button class="add-cart-btn" onclick="addToCart(this,'Washed Out Jeans',559,'images/apparels/washedoutjeans.png')">Add to Cart</button>
-    <span class="added-msg">Added!</span>
+    <div class="cart-action">
+      <button class="add-cart-btn" onclick="addToCart(this,'Washed Out Jeans',559,'images/apparels/washedoutjeans.png')">Add to Cart</button>
+      <span class="added-msg">Added!</span>
+    </div>
   </div>
 
   <div class="product-card">
     <div class="image-frame">
-      <img src="images/apparels/whitebonkerstrack.png" alt="White Track">
+      <img src="images/apparels/whitebonkerstrack.png" alt="White Bonkers Track">
     </div>
     <h3>White Bonkers Track</h3>
     <p class="price">₹699</p>
-    <button class="add-cart-btn" onclick="addToCart(this,'White Bonkers Track',699,'images/apparels/whitebonkerstrack.png')">Add to Cart</button>
-    <span class="added-msg">Added!</span>
+    <div class="cart-action">
+      <button class="add-cart-btn" onclick="addToCart(this,'White Bonkers Track',699,'images/apparels/whitebonkerstrack.png')">Add to Cart</button>
+      <span class="added-msg">Added!</span>
+    </div>
   </div>
 
   <div class="product-card">
@@ -171,37 +207,36 @@
     </div>
     <h3>Yellow Sundress</h3>
     <p class="price">₹799</p>
-    <button class="add-cart-btn" onclick="addToCart(this,'Yellow Sundress',799,'images/apparels/yellowsundress.jpg')">Add to Cart</button>
-    <span class="added-msg">Added!</span>
+    <div class="cart-action">
+      <button class="add-cart-btn" onclick="addToCart(this,'Yellow Sundress',799,'images/apparels/yellowsundress.jpg')">Add to Cart</button>
+      <span class="added-msg">Added!</span>
+    </div>
   </div>
 
 </section>
 
 <script>
+/* CART SYSTEM */
 function getCart(){return JSON.parse(localStorage.getItem("cart"))||[];}
 function saveCart(cart){localStorage.setItem("cart",JSON.stringify(cart));updateCount();}
-function updateCount(){
-  const el=document.getElementById("cart-count");
-  if(!el) return;
-  const cart=getCart();
-  let total=0;
-  cart.forEach(i=>total+=Number(i.qty||0));
-  el.textContent=total;
-}
+function updateCount(){const cart=getCart();let totalQty=0;cart.forEach(i=>totalQty+=Number(i.qty||0));document.getElementById("cart-count").innerText=totalQty;}
 
+/* ADD TO CART WITH FADE-IN "Added!" */
 function addToCart(btn,name,price,img){
+  price=Number(price);
   let cart=getCart();
   let item=cart.find(p=>p.name===name);
-  if(item){item.qty++;}
+  if(item){item.qty=Number(item.qty)+1;}
   else{cart.push({name,price,img,qty:1});}
   saveCart(cart);
 
-  const msg=btn.nextElementSibling;
+  // Fade in/out message
+  let msg = btn.nextElementSibling;
   msg.classList.add("show");
-  setTimeout(()=>msg.classList.remove("show"),1200);
+  setTimeout(()=>{msg.classList.remove("show");},1500);
 }
 
-window.addEventListener("load",updateCount);
+updateCount();
 </script>
 
 </body>
