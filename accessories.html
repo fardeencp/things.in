@@ -47,26 +47,26 @@
   to{opacity:1;}
 }
 
-/* REFINED ARROWS */
+/* ARROWS */
 .arrow{
   position:absolute;
   top:50%;
   transform:translateY(-50%);
-  font-size:22px;
-  color:#444;                      /* darker grey */
-  background:rgba(255,255,255,0.7); /* soft background */
-  padding:5px 9px;
+  font-size:26px;
+  color:#222;                     
+  background:rgba(255,255,255,0.6); 
+  padding:6px 10px;
   border-radius:50%;
   cursor:pointer;
-  opacity:0.7;                     /* ALWAYS visible */
+  opacity:0.8;                    
   transition:0.3s;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(2px);
+  z-index:10;
 }
 
-.left{ left:-18px; }
-.right{ right:-18px; }
+.left{ left:-25px; }
+.right{ right:-25px; }
 
-/* Slight highlight on hover */
 .arrow:hover{
   opacity:1;
   background:rgba(255,255,255,0.9);
@@ -109,10 +109,11 @@
     <div class="slider" id="slider">
       <span class="arrow left" onclick="changeSlide(-1)">&#10094;</span>
 
-      <img src="images/accessories/pandabottle1.png" class="active">
+      <!-- Set pandabottle4.png as active first -->
+      <img src="images/accessories/pandabottle1.png">
       <img src="images/accessories/pandabottle2.png">
       <img src="images/accessories/pandabottle3.png">
-      <img src="images/accessories/pandabottle4.png">
+      <img src="images/accessories/pandabottle4.png" class="active">
       <img src="images/accessories/pandabottle5.png">
       <img src="images/accessories/pandabottle6.png">
 
@@ -127,12 +128,16 @@
 
 <script>
 const slides = document.querySelectorAll("#slider img");
-let current = 0;
+
+// Start with pandabottle4.png which is 4th in array (index 3)
+let current = 3;
 
 function showSlide(index){
   slides.forEach(img => img.classList.remove("active"));
   slides[index].classList.add("active");
 }
+
+showSlide(current);
 
 function changeSlide(step){
   current += step;
@@ -141,6 +146,7 @@ function changeSlide(step){
   showSlide(current);
 }
 
+/* TOUCH SWIPE */
 let startX = 0;
 const slider = document.getElementById("slider");
 
@@ -154,6 +160,7 @@ slider.addEventListener("touchend", e=>{
   if(endX - startX > 50) changeSlide(-1);
 });
 
+/* MOUSE DRAG */
 let isDown = false;
 
 slider.addEventListener("mousedown", e=>{
