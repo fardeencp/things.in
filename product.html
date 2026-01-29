@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product - Things.in</title>
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+.product-page{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:60px;
+  padding:60px 8%;
+}
+
+.product-img{
+  width:100%;
+  background:#f8f8f8;
+  aspect-ratio:3/4;
+  overflow:hidden;
+}
+
+.product-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.product-info h1{
+  font-weight:500;
+  margin-bottom:10px;
+}
+
+.product-price{
+  font-size:1.2rem;
+  margin-bottom:20px;
+}
+
+.size-select{
+  margin-bottom:25px;
+}
+
+.size-select select{
+  padding:8px 12px;
+  border:1px solid #ccc;
+  background:white;
+}
+
+.add-btn{
+  padding:10px 26px;
+  border:1px solid black;
+  background:white;
+  color:black;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.add-btn:hover{
+  background:black;
+  color:white;
+}
+
+.added-msg{
+  margin-left:15px;
+  font-size:0.9rem;
+  opacity:0;
+  transition:opacity 0.4s ease;
+}
+
+@media(max-width:768px){
+  .product-page{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">Things.in</div>
+  <div class="nav-links">
+    <a href="apparels.html">Apparels</a>
+    <a href="accessories.html">Accessories</a>
+    <a href="cart.html" class="cart-icon">🛒<span class="cart-count" id="cart-count">0</span></a>
+  </div>
+</nav>
+
+<section class="product-page">
+
+  <div class="product-img">
+    <img id="product-image" src="">
+  </div>
+
+  <div class="product-info">
+    <h1 id="product-name"></h1>
+    <div class="product-price" id="product-price"></div>
+
+    <div class="size-select" id="size-container">
+      <label>Size:</label>
+      <select id="size">
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+      </select>
+    </div>
+
+    <button class="add-btn" onclick="addToCart()">Add to Cart</button>
+    <span class="added-msg" id="added-msg">Added</span>
+
+  </div>
+
+</section>
+
+<script>
+// PRODUCT DATABASE
+const products = {
+  "anime-tshirt": {name:"Oversized Anime Printed Tshirt", price:449, img:"images/apparels/animetshirt.jpg"},
+  "black-pant": {name:"Black Korean Pants", price:559, img:"images/apparels/blackkoreanpant.jpg"},
+  "brown-pant": {name:"Brown Korean Pants", price:559, img:"images/apparels/brownkoreanpant.jpg"},
+  "cream-pant": {name:"Cream Korean Pants", price:559, img:"images/apparels/creamkoreanpants.jpg"},
+  "light-jeans": {name:"Light Blue Jeans", price:559, img:"images/apparels/lightbluejean.jpg"},
+  "washed-jeans": {name:"Washed Out Jeans", price:559, img:"images/apparels/washedoutjeans.png"},
+  "white-track": {name:"White Bonkers Track", price:699, img:"images/apparels/whitebonkerstrack.png"},
+  "grey-track": {name:"Grey Bonkers Track", price:699, img:"images/apparels/greybonkerstrack.jpg"},
+  "yellow-sundress": {name:"Yellow Sundress", price:799, img:"images/apparels/yellowsundress.jpg"},
+  "red-sundress": {name:"Red Sundress", price:799, img:"images/apparels/redsundress.png"},
+  "blue-sundress": {name:"Blue Sundress", price:799, img:"images/apparels/bluesundress.png"}
+};
+
+// LOAD PRODUCT
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+const product = products[id];
+
+document.getElementById("product-name").innerText = product.name;
+document.getElementById("product-price").innerText = "₹" + product.price;
+document.getElementById("product-image").src = product.img;
+
+// CART
+function getCart(){return JSON.parse(localStorage.getItem("cart"))||[];}
+function saveCart(cart){localStorage.setItem("cart", JSON.stringify(cart));}
+function updateCount(){
+  const cart=getCart();
+  let total=0;
+  cart.forEach(i=>total+=Number(i.qty||0));
+  document.getElementById("cart-count").innerText=total;
+}
+updateCount();
+
+function addToCart(){
+  const size=document.getElementById("size").value;
+  let cart=getCart();
+
+  const existing=cart.find(i=>i.id===id && i.size===size);
+  if(existing){
+    existing.qty++;
+  }else{
+    cart.push({id,name:product.name,price:product.price,img:product.img,size,qty:1});
+  }
+
+  saveCart(cart);
+  updateCount();
+
+  const msg=document.getElementById("added-msg");
+  msg.style.opacity=1;
+  setTimeout(()=>{msg.style.opacity=0;},1200);
+}
+</script>
+
+</body>
+</html>
