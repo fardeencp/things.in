@@ -1,25 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cart | Things.in</title>
+<title>Your Cart - Things.in</title>
 <link rel="stylesheet" href="css/style.css">
+
 <style>
-.cart-item{display:flex;gap:15px;margin:20px 0;align-items:center;}
-.cart-item img{width:70px;height:90px;object-fit:cover;}
-.qty-btn{padding:4px 10px;border:1px solid #0a1f44;background:white;cursor:pointer;}
-.whatsapp-btn{
-  margin-top:20px;
-  padding:12px 20px;
-  border:none;
-  background:#25D366;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
+.cart-container{
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.cart-item{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  padding: 18px 0;
+}
+
+.cart-left{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cart-left img{
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.cart-info h4{
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.cart-info p{
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.qty-controls{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qty-btn{
+  padding: 4px 10px;
+  border: 1px solid #0a1f44;
+  background: white;
+  cursor: pointer;
+}
+
+.qty-btn:hover{
+  background: #0a1f44;
+  color: white;
+}
+
+.remove-btn{
+  font-size: 12px;
+  cursor: pointer;
+  color: #888;
+  margin-top: 4px;
+}
+
+.cart-total{
+  text-align: right;
+  font-size: 18px;
+  margin-top: 30px;
+}
+
+/* MINIMAL WHATSAPP BUTTON */
+.order-btn{
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 18px;
+  border: 1px solid #0a1f44;
+  background: white;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+}
+
+.order-btn:hover{
+  background: #0a1f44;
+  color: white;
 }
 </style>
 </head>
+
 <body>
 
 <nav>
@@ -27,51 +103,90 @@
   <div class="nav-links">
     <a href="index.html">Home</a>
     <a href="apparels.html">Apparels</a>
+    <a href="accessories.html">Accessories</a>
   </div>
 </nav>
 
-<h2 style="text-align:center;margin:30px 0;">Your Cart</h2>
-<div id="cart-container" style="padding:0 10%;"></div>
-<button class="whatsapp-btn" onclick="orderWhatsApp()">Order on WhatsApp</button>
+<div class="cart-container" id="cart-container">
+  <!-- Items appear here -->
+</div>
 
 <script>
-const number="919961365304";
-function getCart(){return JSON.parse(localStorage.getItem("cart"))||[];}
-function saveCart(c){localStorage.setItem("cart",JSON.stringify(c));renderCart();}
-
-function renderCart(){
-  let cart=getCart();let container=document.getElementById("cart-container");
-  container.innerHTML="";let total=0;
-  cart.forEach((item,i)=>{
-    total+=item.price*item.qty;
-    container.innerHTML+=`
-      <div class="cart-item">
-        <img src="${item.img}">
-        <div>
-          <div>${item.name}</div>
-          <div>₹${item.price}</div>
-          <button class="qty-btn" onclick="changeQty(${i},-1)">-</button>
-          ${item.qty}
-          <button class="qty-btn" onclick="changeQty(${i},1)">+</button>
-        </div>
-      </div>`;
-  });
-  container.innerHTML+=`<h3>Total: ₹${total}</h3>`;
+function getCart(){
+  return JSON.parse(localStorage.getItem("cart")) || [];
+}
+function saveCart(cart){
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
 }
 
-function changeQty(i,d){
-  let cart=getCart();
-  cart[i].qty+=d;
-  if(cart[i].qty<=0)cart.splice(i,1);
+function changeQty(name, delta){
+  let cart = getCart();
+  let item = cart.find(i => i.name === name);
+  if(!item) return;
+
+  item.qty += delta;
+  if(item.qty <= 0){
+    cart = cart.filter(i => i.name !== name);
+  }
   saveCart(cart);
 }
 
-function orderWhatsApp(){
-  let cart=getCart();let msg="Hi, I want to order:%0A";
-  let total=0;
-  cart.forEach(i=>{msg+=`${i.qty}x ${i.name} – ₹${i.price*i.qty}%0A`;total+=i.price*i.qty;});
-  msg+=`Total: ₹${total}`;
-  window.open(`https://wa.me/${number}?text=${msg}`);
+function removeItem(name){
+  let cart = getCart().filter(i => i.name !== name);
+  saveCart(cart);
+}
+
+function renderCart(){
+  const container = document.getElementById("cart-container");
+  const cart = getCart();
+  container.innerHTML = "";
+
+  if(cart.length === 0){
+    container.innerHTML = "<p>Your cart is empty.</p>";
+    return;
+  }
+
+  let total = 0;
+  let message = "Hello, I want to order:%0A";
+
+  cart.forEach(item => {
+    total += item.price * item.qty;
+
+    message += `${item.name} x${item.qty} - ₹${item.price * item.qty}%0A`;
+
+    const div = document.createElement("div");
+    div.className = "cart-item";
+    div.innerHTML = `
+      <div class="cart-left">
+        <img src="${item.img}" alt="${item.name}">
+        <div class="cart-info">
+          <h4>${item.name}</h4>
+          <p>₹${item.price}</p>
+          <div class="remove-btn" onclick="removeItem('${item.name}')">Remove</div>
+        </div>
+      </div>
+
+      <div class="qty-controls">
+        <button class="qty-btn" onclick="changeQty('${item.name}', -1)">−</button>
+        <span>${item.qty}</span>
+        <button class="qty-btn" onclick="changeQty('${item.name}', 1)">+</button>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+
+  message += `Total: ₹${total}`;
+
+  const totalDiv = document.createElement("div");
+  totalDiv.className = "cart-total";
+  totalDiv.innerHTML = `
+    <div><strong>Total: ₹${total}</strong></div>
+    <a class="order-btn" href="https://wa.me/919961365304?text=${message}" target="_blank">
+      Proceed to order on WhatsApp
+    </a>
+  `;
+  container.appendChild(totalDiv);
 }
 
 renderCart();
