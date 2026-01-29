@@ -24,22 +24,23 @@
   border-radius:50%;
 }
 
-/* ADD TO CART BUTTON CENTERED */
+/* ADD TO CART CENTERED */
 .cart-action {
-  margin-top: 10px;
+  margin-top: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
 }
 .add-cart-btn {
-  background: #0a1f44;
-  color: white;
-  border: none;
+  background: white;
+  color: black;
+  border: 1px solid black;
   padding: 8px 14px;
   cursor: pointer;
   font-size: 14px;
   border-radius: 4px;
+  text-align: center;
   transition: 0.3s;
 }
 .add-cart-btn:hover {
@@ -50,6 +51,11 @@
   font-size: 14px;
   opacity: 0;
   transition: opacity 0.4s ease;
+  white-space: nowrap;
+}
+.product-card h3, .price {
+  text-align: center;
+  margin-top: 6px;
 }
 </style>
 </head>
@@ -66,40 +72,39 @@
 
 <section class="store-grid">
 
-  <!-- Product List -->
-  <script>
-    const products = [
-      {name:"Anime Printed Tshirt", price:449, img:"images/apparels/animetshirt.jpg"},
-      {name:"Black Korean Pant", price:559, img:"images/apparels/blackkoreanpant.jpg"},
-      {name:"Blue Sundress", price:799, img:"images/apparels/bluesundress.png"},
-      {name:"Brown Korean Pant", price:559, img:"images/apparels/brownkoreanpant.jpg"},
-      {name:"Cream Korean Pants", price:559, img:"images/apparels/creamkoreanpants.jpg"},
-      {name:"Grey Bonkers Track", price:699, img:"images/apparels/greybonkerstrack.jpg"},
-      {name:"Light Blue Jeans", price:559, img:"images/apparels/lightbluejean.jpg"},
-      {name:"Red Sundress", price:799, img:"images/apparels/redsundress.png"},
-      {name:"Washed Out Jeans", price:559, img:"images/apparels/washedoutjeans.png"},
-      {name:"White Bonkers Track", price:699, img:"images/apparels/whitebonkerstrack.png"},
-      {name:"Yellow Sundress", price:799, img:"images/apparels/yellowsundress.jpg"}
-    ];
+<script>
+const products = [
+  {name:"Anime Printed Tshirt", price:449, img:"images/apparels/animetshirt.jpg"},
+  {name:"Black Korean Pant", price:559, img:"images/apparels/blackkoreanpant.jpg"},
+  {name:"Blue Sundress", price:799, img:"images/apparels/bluesundress.png"},
+  {name:"Brown Korean Pant", price:559, img:"images/apparels/brownkoreanpant.jpg"},
+  {name:"Cream Korean Pants", price:559, img:"images/apparels/creamkoreanpants.jpg"},
+  {name:"Grey Bonkers Track", price:699, img:"images/apparels/greybonkerstrack.jpg"},
+  {name:"Light Blue Jeans", price:559, img:"images/apparels/lightbluejean.jpg"},
+  {name:"Red Sundress", price:799, img:"images/apparels/redsundress.png"},
+  {name:"Washed Out Jeans", price:559, img:"images/apparels/washedoutjeans.png"},
+  {name:"White Bonkers Track", price:699, img:"images/apparels/whitebonkerstrack.png"},
+  {name:"Yellow Sundress", price:799, img:"images/apparels/yellowsundress.jpg"}
+];
 
-    const container = document.currentScript.parentElement;
-    products.forEach(p => {
-      const div = document.createElement("div");
-      div.className = "product-card";
-      div.innerHTML = `
-        <div class="image-frame">
-          <img src="${p.img}" alt="${p.name}">
-        </div>
-        <div class="cart-action">
-          <button class="add-cart-btn" onclick="addToCart(this,'${p.name}',${p.price},'${p.img}')">Add to Cart</button>
-          <span class="added-msg">Added!</span>
-        </div>
-        <h3>${p.name}</h3>
-        <p class="price">₹${p.price}</p>
-      `;
-      container.appendChild(div);
-    });
-  </script>
+const container = document.currentScript.parentElement;
+products.forEach(p => {
+  const div = document.createElement("div");
+  div.className = "product-card";
+  div.innerHTML = `
+    <div class="image-frame">
+      <img src="${p.img}" alt="${p.name}">
+    </div>
+    <div class="cart-action">
+      <button class="add-cart-btn" onclick="addToCart(this,'${p.name}',${p.price},'${p.img}')">Add to Cart</button>
+      <span class="added-msg">Added!</span>
+    </div>
+    <h3>${p.name}</h3>
+    <p class="price">₹${p.price}</p>
+  `;
+  container.appendChild(div);
+});
+</script>
 
 </section>
 
