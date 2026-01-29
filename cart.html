@@ -1,139 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cart | Things.in</title>
+<title>Cart - Things.in</title>
 <link rel="stylesheet" href="css/style.css">
-
-<style>
-.cart-item{
-  display:flex;
-  align-items:center;
-  gap:15px;
-  margin-bottom:15px;
-  border-bottom:1px solid #eee;
-  padding-bottom:10px;
-}
-.cart-item img{
-  width:70px;
-  height:90px;
-  object-fit:cover;
-}
-.qty-btn{
-  padding:4px 10px;
-  border:1px solid #0a1f44;
-  background:white;
-  cursor:pointer;
-  margin:0 5px;
-}
-.qty-btn:hover{
-  background:#0a1f44;
-  color:white;
-}
-
-.total-box{
-  margin-top:20px;
-  font-size:18px;
-}
-
-/* Minimal WhatsApp button */
-.whatsapp-btn{
-  margin-top:15px;
-  padding:8px 14px;
-  border:1px solid #0a1f44;
-  background:white;
-  color:black;
-  cursor:pointer;
-}
-.whatsapp-btn:hover{
-  background:#0a1f44;
-  color:white;
-}
-</style>
 </head>
 
 <body>
 
 <nav>
-  <div class="logo">Things.in</div>
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="apparels.html">Apparels</a>
-  </div>
+  <div class="logo"><a href="index.html" style="text-decoration:none;color:inherit;">Things.in</a></div>
+  <div class="nav-links"><a href="index.html">Home</a></div>
 </nav>
 
-<section style="padding:40px">
+<section style="padding:40px 10%;">
   <h2>Your Cart</h2>
   <div id="cart-items"></div>
-  <div class="total-box" id="total"></div>
-  <button class="whatsapp-btn" onclick="sendToWhatsApp()">Proceed to order on WhatsApp</button>
+  <h3 id="total"></h3>
+  <button onclick="orderWhatsApp()" style="margin-top:20px;padding:10px 20px;border:1px solid black;background:none;">
+    Proceed to Order on WhatsApp
+  </button>
 </section>
 
 <script>
-const phone="919961365304";
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
+let container=document.getElementById("cart-items");
+let total=0;
 
-function getCart(){return JSON.parse(localStorage.getItem("cart"))||[];}
-
-function saveCart(cart){localStorage.setItem("cart",JSON.stringify(cart));renderCart();}
-
-function renderCart(){
-  const cart=getCart();
-  const container=document.getElementById("cart-items");
-  const totalBox=document.getElementById("total");
-  container.innerHTML="";
-  let total=0;
-
-  if(cart.length===0){
-    container.innerHTML="<p>Cart is empty</p>";
-    totalBox.innerHTML="";
-    return;
-  }
-
-  cart.forEach((item,i)=>{
-    item.price=Number(item.price);
-    item.qty=Number(item.qty||1);
-    total+=item.price*item.qty;
-
-    const div=document.createElement("div");
-    div.className="cart-item";
-    div.innerHTML=`
-      <img src="${item.img}">
+cart.forEach(item=>{
+  total+=item.price;
+  container.innerHTML+=`
+    <div style="display:flex;gap:15px;margin-bottom:15px;">
+      <img src="${item.image}" style="width:70px;">
       <div>
-        <strong>${item.name}</strong><br>
-        ₹${item.price} x ${item.qty} 
-        <button class="qty-btn" onclick="changeQty(${i},-1)">-</button>
-        <button class="qty-btn" onclick="changeQty(${i},1)">+</button>
+        <p>${item.name}</p>
+        <p>₹${item.price}</p>
       </div>
-    `;
-    container.appendChild(div);
-  });
+    </div>`;
+});
+document.getElementById("total").innerText="Total: ₹"+total;
 
-  totalBox.innerHTML=`Total: ₹${total}`;
+function orderWhatsApp(){
+  let msg="Order:%0A";
+  cart.forEach(i=>msg+=`${i.name} - ₹${i.price}%0A`);
+  msg+="Total: ₹"+total;
+  window.open(`https://wa.me/919961365304?text=${msg}`);
 }
-
-function changeQty(i,d){
-  let cart=getCart();
-  cart[i].qty=Number(cart[i].qty)+d;
-  if(cart[i].qty<=0) cart.splice(i,1);
-  saveCart(cart);
-}
-
-function sendToWhatsApp(){
-  const cart=getCart();
-  if(cart.length===0) return alert("Cart is empty");
-
-  let msg="Order Details:%0A";
-  let total=0;
-  cart.forEach(item=>{
-    total+=item.price*item.qty;
-    msg+=`${item.name} - ₹${item.price} x ${item.qty}%0A`;
-  });
-  msg+=`Total: ₹${total}`;
-  window.open(`https://wa.me/${phone}?text=${msg}`,"_blank");
-}
-
-renderCart();
 </script>
 
 </body>
