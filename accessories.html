@@ -7,70 +7,162 @@
 <link rel="stylesheet" href="css/style.css">
 
 <style>
-.slider{position:relative;overflow:hidden;}
-.slides{display:flex;transition:transform .4s ease;}
-.slides img{width:100%;flex-shrink:0;}
-.arrow{position:absolute;top:50%;transform:translateY(-50%);
-background:rgba(0,0,0,.2);border:none;color:white;font-size:18px;padding:6px 10px;}
-.arrow.left{left:-35px;} .arrow.right{right:-35px;}
+/* SLIDER INSIDE PRODUCT FRAME */
+.slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
 
-.add-cart{margin-top:8px;padding:8px 16px;border:1px solid black;background:none;}
-#cart-msg{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);font-size:14px;color:black;display:none;}
+.slide-track {
+  display: flex;
+  transition: transform 0.4s ease;
+  height: 100%;
+}
+
+.slide-track img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Subtle arrows */
+.slide-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.15);
+  border: none;
+  color: white;
+  font-size: 18px;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.slide-btn:hover {
+  opacity: 1;
+}
+
+/* CART BUTTON SAME AS APPARELS */
+.cart-icon{
+  position:relative;
+  text-decoration:none;
+  font-size:20px;
+}
+.cart-count{
+  position:absolute;
+  top:-8px;
+  right:-10px;
+  background:#0a1f44;
+  color:white;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:50%;
+}
+
+.add-cart-btn{
+  margin-top:8px;
+  padding:8px 14px;
+  border:1px solid #0a1f44;
+  background:white;
+  cursor:pointer;
+}
+.add-cart-btn:hover{
+  background:#0a1f44;
+  color:white;
+}
 </style>
 </head>
 
 <body>
 
 <nav>
-  <div class="logo"><a href="index.html" style="text-decoration:none;color:inherit;">Things.in</a></div>
+  <div class="logo">Things.in</div>
   <div class="nav-links">
     <a href="index.html">Home</a>
-    <a href="cart.html" class="cart-link">🛒 <span id="cart-count">0</span></a>
+    <a href="apparels.html">Apparels</a>
+    <a href="cart.html" class="cart-icon">🛒<span class="cart-count" id="cart-count">0</span></a>
   </div>
 </nav>
 
 <section class="store-grid">
-<div class="product-card">
-  <div class="slider">
-    <button class="arrow left" onclick="moveSlide(-1)">‹</button>
-    <div class="slides" id="slides">
-      <img src="images/accessories/pandabottle4.png">
-      <img src="images/accessories/pandabottle1.png">
-      <img src="images/accessories/pandabottle2.png">
-      <img src="images/accessories/pandabottle3.png">
-      <img src="images/accessories/pandabottle5.png">
-      <img src="images/accessories/pandabottle6.png">
+
+  <!-- PANDA BOTTLE PRODUCT -->
+  <div class="product-card">
+    <div class="image-frame">
+      <div class="slider">
+        <div class="slide-track" id="pandaTrack">
+
+          <!-- MAIN IMAGE FIRST -->
+          <img src="images/accessories/pandabottle4.png" alt="">
+          <img src="images/accessories/pandabottle1.png" alt="">
+          <img src="images/accessories/pandabottle2.png" alt="">
+          <img src="images/accessories/pandabottle3.png" alt="">
+          <img src="images/accessories/pandabottle5.png" alt="">
+          <img src="images/accessories/pandabottle6.png" alt="">
+
+        </div>
+
+        <button class="slide-btn prev" onclick="moveSlide(-1)">‹</button>
+        <button class="slide-btn next" onclick="moveSlide(1)">›</button>
+      </div>
     </div>
-    <button class="arrow right" onclick="moveSlide(1)">›</button>
+
+    <h3>Panda Bottle</h3>
+    <p class="price">₹399</p>
+    <button class="add-cart-btn" onclick="addToCart('Panda Bottle',399,'images/accessories/pandabottle4.png')">Add to Cart</button>
   </div>
-  <h3>Panda Bottle</h3>
-  <p class="price">₹399</p>
-  <button class="add-cart" onclick="addToCart('Panda Bottle',399,'images/accessories/pandabottle4.png')">Add to Cart</button>
-</div>
+
 </section>
 
-<div id="cart-msg">Added to cart</div>
-
 <script>
-let index=0;
-const slides=document.getElementById("slides");
-const total=slides.children.length;
-function moveSlide(s){ index=(index+s+total)%total; slides.style.transform=`translateX(-${index*100}%)`; }
+let index = 0;
+const track = document.getElementById("pandaTrack");
+const totalSlides = track.children.length;
 
-function addToCart(name, price, image){
-  let cart=JSON.parse(localStorage.getItem("cart"))||[];
-  cart.push({name,price,image,quantity:1});
-  localStorage.setItem("cart",JSON.stringify(cart));
-  updateCartCount();
-  cartMsg.style.display="block";
-  setTimeout(()=>cartMsg.style.display="none",1200);
+function moveSlide(direction) {
+  index += direction;
+
+  if (index < 0) index = totalSlides - 1;
+  if (index >= totalSlides) index = 0;
+
+  track.style.transform = `translateX(-${index * 100}%)`;
 }
 
-function updateCartCount(){
-  let cart=JSON.parse(localStorage.getItem("cart"))||[];
-  document.getElementById("cart-count").innerText=cart.length;
+/* CART SYSTEM */
+function getCart(){return JSON.parse(localStorage.getItem("cart"))||[];}
+function saveCart(cart){localStorage.setItem("cart",JSON.stringify(cart));updateCount();}
+function updateCount(){const cart=getCart();let totalQty=0;cart.forEach(i=>totalQty+=Number(i.qty||0));document.getElementById("cart-count").innerText=totalQty;}
+
+/* MINIMAL POPUP FOR ADD TO CART */
+function showPopup(msg){
+  const pop=document.createElement("div");
+  pop.innerText=msg;
+  pop.style.position="fixed";
+  pop.style.bottom="20px";
+  pop.style.left="50%";
+  pop.style.transform="translateX(-50%)";
+  pop.style.color="black";
+  pop.style.fontSize="14px";
+  pop.style.zIndex="9999";
+  document.body.appendChild(pop);
+  setTimeout(()=>pop.remove(),1500);
 }
-updateCartCount();
+
+function addToCart(name,price,img){
+  price=Number(price);
+  let cart=getCart();
+  let item=cart.find(p=>p.name===name);
+  if(item){item.qty=Number(item.qty)+1;}
+  else{cart.push({name,price,img,qty:1});}
+  saveCart(cart);
+  showPopup("Added to cart");
+}
+updateCount();
 </script>
 
 </body>
