@@ -75,7 +75,6 @@
 <script>
 const products = {
 
-  // ACCESSORY
   pandabottle:{
     name:"Panda Bottle",
     price:399,
@@ -89,7 +88,6 @@ const products = {
     type:"color"
   },
 
-  // APPARELS
   "anime-tshirt":{name:"Oversized Anime Printed Tshirt",price:449,desc:"Soft oversized streetwear fit.",img:"images/apparels/animetshirt.jpg"},
   "black-pant":{name:"Black Korean Pants",price:559,desc:"Minimal loose-fit trousers.",img:"images/apparels/blackkoreanpant.jpg"},
   "brown-pant":{name:"Brown Korean Pants",price:559,desc:"Earth-tone relaxed fit.",img:"images/apparels/brownkoreanpant.jpg"},
@@ -103,50 +101,85 @@ const products = {
   "blue-sundress":{name:"Blue Sundress",price:799,desc:"Soft flowy sundress.",img:"images/apparels/bluesundress.png"}
 };
 
-const id=new URLSearchParams(window.location.search).get("id");
-const p=products[id];
-const container=document.getElementById("product-container");
+let selectedSize = null;
+
+const id = new URLSearchParams(window.location.search).get("id");
+const p = products[id];
+const container = document.getElementById("product-container");
 
 if(!p){container.innerHTML="<h2>Product not found</h2>";}
 else{
-  let html=`<img id="mainImg" src="${p.img||p.images[0]}">
-  <div class="product-name">${p.name}</div>
-  <div class="product-desc">${p.desc}</div>
-  <div class="price">₹${p.price}</div>`;
+  let html = `
+    <img id="mainImg" src="${p.img || p.images[0]}">
+    <div class="product-name">${p.name}</div>
+    <div class="product-desc">${p.desc}</div>
+    <div class="price">₹${p.price}</div>
+  `;
 
   if(p.type==="color"){
-    html+=`
+    html += `
     <div class="color-select">
       <div class="color-box yellow" onclick="switchImg(3)"></div>
       <div class="color-box grey" onclick="switchImg(1)"></div>
     </div>`;
-  }else{
-    html+=`
+  } else {
+    html += `
     <div class="size-select">
-      <div class="size-btn">S</div>
-      <div class="size-btn">M</div>
-      <div class="size-btn">L</div>
+      <div class="size-btn" onclick="selectSize(this,'S')">S</div>
+      <div class="size-btn" onclick="selectSize(this,'M')">M</div>
+      <div class="size-btn" onclick="selectSize(this,'L')">L</div>
     </div>`;
   }
 
-  html+=`<button class="add-cart-btn" onclick="addToCart('${p.name}',${p.price},'${p.img||p.images[0]}')">Add to Cart</button>`;
-  container.innerHTML=html;
+  html += `<button class="add-cart-btn" onclick="addToCart('${p.name}',${p.price},'${p.img || p.images[0]}')">Add to Cart</button>
+           <div id="addedMsg" style="opacity:0;font-size:13px;margin-top:6px;">Added!</div>`;
+
+  container.innerHTML = html;
 }
 
-function switchImg(i){document.getElementById("mainImg").src=products[id].images[i];}
+/* SIZE SELECT */
+function selectSize(el,size){
+  selectedSize=size;
+  document.querySelectorAll(".size-btn").forEach(b=>b.style.background="white");
+  el.style.background="#0a1f44";
+  el.style.color="white";
+}
 
+/* COLOR SWITCH */
+function switchImg(i){
+  document.getElementById("mainImg").src=products[id].images[i];
+}
+
+/* CART SYSTEM */
 function getCart(){return JSON.parse(localStorage.getItem("cart"))||[];}
 function saveCart(c){localStorage.setItem("cart",JSON.stringify(c));updateCount();}
 function updateCount(){let t=0;getCart().forEach(i=>t+=i.qty);document.getElementById("cart-count").innerText=t;}
+
+function showAdded(){
+  const m=document.getElementById("addedMsg");
+  m.style.opacity="1";
+  setTimeout(()=>m.style.opacity="0",900);
+}
+
 function addToCart(name,price,img){
+  if(products[id].type!=="color" && !selectedSize){
+    alert("Select size first");
+    return;
+  }
+
   let c=getCart();
-  let it=c.find(p=>p.name===name);
-  if(it)it.qty++; else c.push({name,price,img,qty:1});
+  let key=name+(selectedSize?` (${selectedSize})`:"");
+  let it=c.find(p=>p.name===key);
+
+  if(it) it.qty++;
+  else c.push({name:key,price,img,qty:1});
+
   saveCart(c);
+  showAdded();
 }
 
 updateCount();
 </script>
-
+  
 </body>
 </html>
