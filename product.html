@@ -3,150 +3,232 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Product - Things.in</title>
+<title>Product | Things.in</title>
 <link rel="stylesheet" href="css/style.css">
+
 <style>
-body{font-family:Arial,sans-serif; text-align:center; padding:20px;}
-nav{display:flex; justify-content:flex-end; padding:15px 8%; border-bottom:1px solid #eee;}
-.nav-links a{margin-left:20px; text-decoration:none; color:#0a1f44; font-weight:500;}
-.cart-count{background:#0a1f44;color:white;font-size:12px;padding:2px 6px;border-radius:50%; position:relative; top:-5px; left:2px;}
+body { text-align: center; padding: 20px; }
+nav .nav-links a { margin-left: 15px; }
 
-.image-frame{width:100%; max-width:350px; margin:0 auto; position:relative; overflow:hidden;}
-.image-frame img{width:100%; object-fit:cover;}
-.slide-track{display:flex; transition:transform 0.4s ease;}
-.slide-btn{position:absolute; top:50%; transform:translateY(-50%);
-  background:rgba(0,0,0,0.25); border:none; color:white; font-size:18px; padding:6px 10px; cursor:pointer; border-radius:50%; opacity:0.6;}
-.slide-btn:hover{opacity:1;}
-.prev{left:5px;} .next{right:5px;}
+.product-container { max-width: 400px; margin: 0 auto; }
+.image-frame { position: relative; overflow: hidden; width: 100%; max-width: 350px; margin: 0 auto; }
+.slider { width: 100%; overflow: hidden; }
+.slide-track { display: flex; transition: transform 0.4s ease; }
+.slide-track img { width: 100%; flex-shrink: 0; object-fit: cover; }
+.slide-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.25); border: none; color: white; font-size: 18px; padding: 6px 10px; cursor: pointer; border-radius: 50%; opacity: 0.6; }
+.slide-btn:hover { opacity: 1; }
+.prev { left: 5px; }
+.next { right: 5px; }
 
-h2{margin:15px 0 5px;}
-.price{margin:10px 0 15px; font-weight:500; color:#333;}
-.add-cart-btn{padding:8px 20px; font-size:14px; border:1px solid #0a1f44; background:white; color:#0a1f44; cursor:pointer;}
-.add-cart-btn:hover{background:#0a1f44; color:white;}
+h1 { margin: 15px 0 5px; font-size: 1.4rem; }
+.price { margin: 5px 0 15px; font-weight: 500; color: #333; }
 
-/* Added message */
-.added-msg{display:inline-block; font-size:12px; background:black; color:white; padding:3px 8px; border-radius:3px; opacity:0; margin-left:10px; transition:opacity 0.35s ease;}
-.added-msg.show{opacity:1;}
+/* Size selector for apparels */
+.size-options button {
+  padding: 6px 12px; margin: 0 5px 10px 0; border:1px solid #0a1f44; background:white; cursor:pointer;
+}
+.size-options button.selected { background:#0a1f44; color:white; }
 
-/* Size dropdown */
-.size-select{margin:10px 0; padding:5px 8px; font-size:14px;}
+/* Color selector for accessories */
+.color-options button {
+  width:20px; height:20px; border:none; cursor:pointer; margin:0 5px 10px 0; border-radius:3px;
+}
+.color-options button.selected { outline: 2px solid #0a1f44; }
 
-/* Color selection for accessories */
-.color-option{display:inline-block; width:20px; height:20px; margin:0 5px; border:1px solid #333; cursor:pointer;}
-.color-option.selected{border:2px solid #0a1f44;}
-.color-yellow{background:yellow;}
-.color-grey{background:grey;}
+/* Add to cart minimal */
+.add-cart-btn {
+  padding: 8px 20px;
+  border: 1px solid #0a1f44;
+  background: white;
+  color: #0a1f44;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.add-cart-btn:hover { background:#0a1f44; color:white; }
+.added-msg {
+  font-size:12px; background:black; color:white; padding:3px 8px; border-radius:3px; opacity:0; margin-left:10px;
+  display:inline-block; transition:opacity 0.4s ease;
+}
+.added-msg.show { opacity:1; }
 </style>
 </head>
-<body>
 
+<body>
 <nav>
-  <a href="cart.html" class="cart-icon">🛒<span class="cart-count" id="cart-count">0</span></a>
+  <div class="logo">Things.in</div>
+  <div class="nav-links">
+    <a href="apparels.html">Apparels</a>
+    <a href="accessories.html">Accessories</a>
+    <a href="cart.html" class="cart-icon">🛒<span class="cart-count" id="cart-count">0</span></a>
+  </div>
 </nav>
 
-<div id="product-container">
+<div class="product-container">
   <div class="image-frame">
-    <div class="slide-track" id="productSlide"></div>
-    <button class="slide-btn prev" onclick="moveSlide(-1)">‹</button>
-    <button class="slide-btn next" onclick="moveSlide(1)">›</button>
+    <div class="slider">
+      <div class="slide-track" id="slideTrack"></div>
+      <button class="slide-btn prev" onclick="moveSlide(-1)">‹</button>
+      <button class="slide-btn next" onclick="moveSlide(1)">›</button>
+    </div>
   </div>
+  <h1 id="prodName"></h1>
+  <p class="price" id="prodPrice"></p>
 
-  <h2 id="productName"></h2>
+  <div id="sizeOrColor"></div>
 
-  <div id="optionsContainer"></div>
-
-  <p class="price" id="productPrice"></p>
-
-  <div>
-    <button class="add-cart-btn" id="addCartBtn">Add to Cart</button>
-    <span class="added-msg" id="addedMsg">Added to Cart</span>
+  <div style="margin-top:10px;">
+    <button class="add-cart-btn" id="addBtn">Add to Cart</button>
+    <span class="added-msg" id="addedMsg">Added!</span>
   </div>
 </div>
 
 <script>
-const products = {
-  "anime-tshirt": {name:"Oversized Anime Printed Tshirt", price:449, imgs:["images/apparels/animetshirt.jpg"], type:"apparel", sizes:["S","M","L","XL"]},
-  "black-pant": {name:"Black Korean Pants", price:559, imgs:["images/apparels/blackkoreanpant.jpg"], type:"apparel", sizes:["S","M","L","XL"]},
-  "brown-pant": {name:"Brown Korean Pants", price:559, imgs:["images/apparels/brownkoreanpant.jpg"], type:"apparel", sizes:["S","M","L","XL"]},
-  "cream-pant": {name:"Cream Korean Pants", price:559, imgs:["images/apparels/creamkoreanpants.jpg"], type:"apparel", sizes:["S","M","L","XL"]},
-  "light-jeans": {name:"Light Blue Jeans", price:559, imgs:["images/apparels/lightbluejean.jpg"], type:"apparel", sizes:["S","M","L","XL"]},
-  "washed-jeans": {name:"Washed Out Jeans", price:559, imgs:["images/apparels/washedoutjeans.png"], type:"apparel", sizes:["S","M","L","XL"]},
-  "white-track": {name:"White Bonkers Track", price:699, imgs:["images/apparels/whitebonkerstrack.png"], type:"apparel", sizes:["S","M","L","XL"]},
-  "grey-track": {name:"Grey Bonkers Track", price:699, imgs:["images/apparels/greybonkerstrack.jpg"], type:"apparel", sizes:["S","M","L","XL"]},
-  "yellow-sundress": {name:"Yellow Sundress", price:799, imgs:["images/apparels/yellowsundress.jpg"], type:"apparel", sizes:["S","M","L","XL"]},
-  "red-sundress": {name:"Red Sundress", price:799, imgs:["images/apparels/redsundress.png"], type:"apparel", sizes:["S","M","L","XL"]},
-  "blue-sundress": {name:"Blue Sundress", price:799, imgs:["images/apparels/bluesundress.png"], type:"apparel", sizes:["S","M","L","XL"]},
-  "pandabottle": {name:"Panda Bottle", price:399, imgs:[
-    "images/accessories/pandabottle4.png",
-    "images/accessories/pandabottle1.png",
-    "images/accessories/pandabottle2.png",
-    "images/accessories/pandabottle3.png",
-    "images/accessories/pandabottle5.png",
-    "images/accessories/pandabottle6.png"
-  ], type:"accessory", colors:["yellow","grey"]}
-};
-
-// Get product ID from URL
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
-const product = products[id];
 
-// Populate page
-const slideTrack = document.getElementById("productSlide");
-product.imgs.forEach(src=>{
+/* Product database */
+const products = {
+  "anime-tshirt": {
+    name:"Oversized Anime Printed Tshirt",
+    price:449,
+    images:["images/apparels/animetshirt.jpg"],
+    type:"apparel",
+    sizes:["S","M","L","XL"]
+  },
+  "black-pant": {
+    name:"Black Korean Pants",
+    price:559,
+    images:["images/apparels/blackkoreanpant.jpg"],
+    type:"apparel",
+    sizes:["S","M","L","XL"]
+  },
+  "brown-pant": {
+    name:"Brown Korean Pants",
+    price:559,
+    images:["images/apparels/brownkoreanpant.jpg"],
+    type:"apparel",
+    sizes:["S","M","L","XL"]
+  },
+  "cream-pant": {
+    name:"Cream Korean Pants",
+    price:559,
+    images:["images/apparels/creamkoreanpants.jpg"],
+    type:"apparel",
+    sizes:["S","M","L","XL"]
+  },
+  "blue-sundress": {
+    name:"Blue Sundress",
+    price:799,
+    images:["images/apparels/bluesundress.png"],
+    type:"apparel",
+    sizes:["S","M","L"]
+  },
+  "red-sundress": {
+    name:"Red Sundress",
+    price:799,
+    images:["images/apparels/redsundress.png"],
+    type:"apparel",
+    sizes:["S","M","L"]
+  },
+  "yellow-sundress": {
+    name:"Yellow Sundress",
+    price:799,
+    images:["images/apparels/yellowsundress.jpg"],
+    type:"apparel",
+    sizes:["S","M","L"]
+  },
+  "white-track": {
+    name:"White Bonkers Track",
+    price:699,
+    images:["images/apparels/whitebonkerstrack.png"],
+    type:"apparel",
+    sizes:["S","M","L","XL"]
+  },
+  "grey-track": {
+    name:"Grey Bonkers Track",
+    price:699,
+    images:["images/apparels/greybonkerstrack.jpg"],
+    type:"apparel",
+    sizes:["S","M","L","XL"]
+  },
+  "pandabottle": {
+    name:"Panda Bottle",
+    price:399,
+    images:[
+      "images/accessories/pandabottle4.png",
+      "images/accessories/pandabottle1.png",
+      "images/accessories/pandabottle2.png",
+      "images/accessories/pandabottle3.png",
+      "images/accessories/pandabottle5.png",
+      "images/accessories/pandabottle6.png"
+    ],
+    type:"accessory",
+    colors:["yellow","grey"]
+  }
+};
+
+/* Populate product info */
+const product = products[id];
+if(!product){ alert("Product not found"); }
+
+const track = document.getElementById("slideTrack");
+product.images.forEach(src=>{
   const img = document.createElement("img");
-  img.src = src;
-  slideTrack.appendChild(img);
+  img.src=src;
+  track.appendChild(img);
 });
 
-document.getElementById("productName").innerText = product.name;
-document.getElementById("productPrice").innerText = "₹" + product.price;
+document.getElementById("prodName").innerText = product.name;
+document.getElementById("prodPrice").innerText = "₹"+product.price;
 
-// Options
-const optionsContainer = document.getElementById("optionsContainer");
+const container = document.getElementById("sizeOrColor");
 if(product.type==="apparel"){
-  const select = document.createElement("select");
-  select.className = "size-select";
-  product.sizes.forEach(s=>{
-    const opt = document.createElement("option");
-    opt.value=s; opt.innerText=s;
-    select.appendChild(opt);
+  const sizeDiv = document.createElement("div");
+  sizeDiv.className="size-options";
+  product.sizes.forEach(sz=>{
+    const btn = document.createElement("button");
+    btn.innerText=sz;
+    btn.onclick=()=>{document.querySelectorAll(".size-options button").forEach(b=>b.classList.remove("selected")); btn.classList.add("selected");};
+    sizeDiv.appendChild(btn);
   });
-  optionsContainer.appendChild(select);
-} else if(product.type==="accessory"){
+  container.appendChild(sizeDiv);
+}else if(product.type==="accessory"){
+  const colorDiv = document.createElement("div");
+  colorDiv.className="color-options";
   product.colors.forEach(c=>{
-    const div = document.createElement("div");
-    div.className = "color-option color-"+c;
-    div.onclick = ()=>{document.querySelectorAll(".color-option").forEach(x=>x.classList.remove("selected")); div.classList.add("selected");}
-    optionsContainer.appendChild(div);
+    const btn = document.createElement("button");
+    btn.style.background = c;
+    btn.onclick=()=>{document.querySelectorAll(".color-options button").forEach(b=>b.classList.remove("selected")); btn.classList.add("selected");};
+    colorDiv.appendChild(btn);
   });
+  container.appendChild(colorDiv);
 }
 
-// Cart system
+/* Slider */
+let index = 0;
+function moveSlide(dir){
+  index+=dir;
+  if(index<0) index = product.images.length-1;
+  if(index>=product.images.length) index = 0;
+  track.style.transform=`translateX(-${index*100}%)`;
+}
+
+/* Cart system */
 function getCart(){return JSON.parse(localStorage.getItem("cart"))||[];}
 function saveCart(cart){localStorage.setItem("cart",JSON.stringify(cart));updateCount();}
 function updateCount(){const cart=getCart(); let total=0; cart.forEach(i=>total+=Number(i.qty||0)); document.getElementById("cart-count").innerText=total;}
 updateCount();
 
-// Slider logic
-let index = 0;
-function moveSlide(dir){
-  index+=dir;
-  if(index<0) index=product.imgs.length-1;
-  if(index>=product.imgs.length) index=0;
-  slideTrack.style.transform = `translateX(-${index*100}%)`;
-}
-
-// Add to cart
-document.getElementById("addCartBtn").onclick = ()=>{
-  let cart=getCart();
-  let item=cart.find(p=>p.name===product.name);
-  if(item){item.qty+=1;} else {cart.push({name:product.name, price:product.price, img:product.imgs[0], qty:1});}
+/* Add to cart */
+document.getElementById("addBtn").onclick = function(){
+  let cart = getCart();
+  let item = cart.find(p=>p.name===product.name);
+  if(item){item.qty+=1;} else {cart.push({name:product.name, price:product.price, img:product.images[0], qty:1});}
   saveCart(cart);
   const msg = document.getElementById("addedMsg");
   msg.classList.add("show");
   setTimeout(()=>msg.classList.remove("show"),900);
-}
+};
 </script>
 </body>
 </html>
