@@ -85,7 +85,7 @@ const products = {
       "images/accessories/pandabottle2.png",
       "images/accessories/pandabottle3.png"
     ],
-    type:"color"
+    type:"gallery"
   },
 
   "anime-tshirt":{name:"Oversized Anime Printed Tshirt",price:449,desc:"Soft oversized streetwear fit.",img:"images/apparels/animetshirt.jpg"},
@@ -102,27 +102,32 @@ const products = {
 };
 
 let selectedSize = null;
+let currentIndex = 0;
 
 const id = new URLSearchParams(window.location.search).get("id");
 const p = products[id];
 const container = document.getElementById("product-container");
 
-if(!p){container.innerHTML="<h2>Product not found</h2>";}
+if(!p){
+  container.innerHTML="<h2>Product not found</h2>";
+}
 else{
+
+  let mainImg = p.img || p.images[0];
+
   let html = `
-    <img id="mainImg" src="${p.img || p.images[0]}">
+    <div class="img-wrapper" style="position:relative;">
+      <button onclick="prevImg()" style="position:absolute;left:0;top:45%;font-size:22px;background:none;border:none;cursor:pointer;">‹</button>
+      <img id="mainImg" src="${mainImg}">
+      <button onclick="nextImg()" style="position:absolute;right:0;top:45%;font-size:22px;background:none;border:none;cursor:pointer;">›</button>
+    </div>
+
     <div class="product-name">${p.name}</div>
     <div class="product-desc">${p.desc}</div>
     <div class="price">₹${p.price}</div>
   `;
 
-  if(p.type==="color"){
-    html += `
-    <div class="color-select">
-      <div class="color-box yellow" onclick="switchImg(3)"></div>
-      <div class="color-box grey" onclick="switchImg(1)"></div>
-    </div>`;
-  } else {
+  if(!p.type){
     html += `
     <div class="size-select">
       <div class="size-btn" onclick="selectSize(this,'S')">S</div>
@@ -131,13 +136,28 @@ else{
     </div>`;
   }
 
-  html += `<button class="add-cart-btn" onclick="addToCart('${p.name}',${p.price},'${p.img || p.images[0]}')">Add to Cart</button>
-           <div id="addedMsg" style="opacity:0;font-size:13px;margin-top:6px;">Added!</div>`;
+  html += `
+    <button class="add-cart-btn" onclick="addToCart('${p.name}',${p.price},'${mainImg}')">Add to Cart</button>
+    <div id="addedMsg" style="opacity:0;font-size:13px;margin-top:6px;">Added to cart ✓</div>
+  `;
 
   container.innerHTML = html;
 }
 
-/* SIZE SELECT */
+/* IMAGE SLIDER */
+function prevImg(){
+  if(!p.images) return;
+  currentIndex = (currentIndex - 1 + p.images.length) % p.images.length;
+  document.getElementById("mainImg").src = p.images[currentIndex];
+}
+
+function nextImg(){
+  if(!p.images) return;
+  currentIndex = (currentIndex + 1) % p.images.length;
+  document.getElementById("mainImg").src = p.images[currentIndex];
+}
+
+/* SIZE */
 function selectSize(el,size){
   selectedSize=size;
   document.querySelectorAll(".size-btn").forEach(b=>b.style.background="white");
@@ -145,12 +165,7 @@ function selectSize(el,size){
   el.style.color="white";
 }
 
-/* COLOR SWITCH */
-function switchImg(i){
-  document.getElementById("mainImg").src=products[id].images[i];
-}
-
-/* CART SYSTEM */
+/* CART */
 function getCart(){return JSON.parse(localStorage.getItem("cart"))||[];}
 function saveCart(c){localStorage.setItem("cart",JSON.stringify(c));updateCount();}
 function updateCount(){let t=0;getCart().forEach(i=>t+=i.qty);document.getElementById("cart-count").innerText=t;}
@@ -158,11 +173,11 @@ function updateCount(){let t=0;getCart().forEach(i=>t+=i.qty);document.getElemen
 function showAdded(){
   const m=document.getElementById("addedMsg");
   m.style.opacity="1";
-  setTimeout(()=>m.style.opacity="0",900);
+  setTimeout(()=>m.style.opacity="0",1000);
 }
 
 function addToCart(name,price,img){
-  if(products[id].type!=="color" && !selectedSize){
+  if(!p.type && !selectedSize){
     alert("Select size first");
     return;
   }
