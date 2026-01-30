@@ -46,15 +46,27 @@
 </section>
 
 <script>
-function getCart(){return JSON.parse(localStorage.getItem("cart"))||[];}
-function updateCount(){
-  const cart=getCart();
-  let total=0;
-  cart.forEach(i=>total+=Number(i.qty||0));
-  document.getElementById("cart-count").innerText=total;
+function getCart(){
+  return JSON.parse(localStorage.getItem("cart")) || [];
 }
-updateCount();
+
+function saveCart(cart){
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartCount();
+}
+
+function updateCartCount(){
+  const el = document.getElementById("cart-count");
+  if(!el) return;
+  let total = 0;
+  getCart().forEach(i => total += i.qty);
+  el.innerText = total;
+}
+
+document.addEventListener("DOMContentLoaded", updateCartCount);
+window.addEventListener("storage", updateCartCount);
 </script>
+
 
 </body>
 </html>
