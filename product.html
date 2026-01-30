@@ -9,14 +9,19 @@
 <style>
 .product-container{
   max-width:900px;
-  margin:40px auto;
+  margin:20px auto 40px; /* less top space */
   padding:0 20px;
   display:flex;
   gap:50px;
   align-items:flex-start;
 }
 
-.product-images{flex:1;max-width:420px;position:relative;}
+.product-images{
+  flex:1;
+  max-width:420px;
+  position:relative;
+  margin-top:-10px; /* lifts image block */
+}
 .product-images img{width:100%;border-radius:6px;}
 
 .product-details{flex:1;max-width:420px;}
