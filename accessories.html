@@ -8,7 +8,18 @@
 
 <style>
 .store-grid{justify-content:center;}
-.product-card{max-width:280px;}
+.product-card{
+  max-width:280px;
+  text-align:center;
+  cursor:pointer;
+  transition:transform 0.2s ease;
+}
+.product-card:hover{transform:scale(1.03);}
+
+.product-link{
+  text-decoration:none;
+  color:black;
+}
 
 /* Slider */
 .image-frame{position:relative; overflow:hidden;}
@@ -23,13 +34,6 @@
 }
 .slide-btn:hover{opacity:1;}
 .prev{left:5px;} .next{right:5px;}
-
-/* Add to cart minimal */
-.cart-action{display:flex;align-items:center;gap:10px;justify-content:center;margin-top:8px;}
-.add-cart-btn{padding:6px 0;border:none;background:none;color:#0a1f44;font-size:14px;cursor:pointer;}
-.add-cart-btn:hover{text-decoration:underline;}
-.added-msg{font-size:12px;background:black;color:white;padding:3px 8px;border-radius:3px;opacity:0;transition:opacity 0.35s ease;}
-.added-msg.show{opacity:1;}
 </style>
 </head>
 
@@ -44,64 +48,60 @@
 </nav>
 
 <section class="store-grid">
-  <div class="product-card">
-    <div class="image-frame">
-      <div class="slider">
-        <div class="slide-track" id="pandaTrack">
-          <img src="images/accessories/pandabottle4.png">
-          <img src="images/accessories/pandabottle1.png">
-          <img src="images/accessories/pandabottle2.png">
-          <img src="images/accessories/pandabottle3.png">
-          <img src="images/accessories/pandabottle5.png">
-          <img src="images/accessories/pandabottle6.png">
+
+  <a href="product.html?id=panda-bottle" class="product-link">
+    <div class="product-card">
+      <div class="image-frame">
+        <div class="slider">
+          <div class="slide-track" id="pandaTrack">
+            <img src="images/accessories/pandabottle4.png">
+            <img src="images/accessories/pandabottle1.png">
+            <img src="images/accessories/pandabottle2.png">
+            <img src="images/accessories/pandabottle3.png">
+            <img src="images/accessories/pandabottle5.png">
+            <img src="images/accessories/pandabottle6.png">
+          </div>
+          <button class="slide-btn prev" onclick="moveSlide(event,-1)">‹</button>
+          <button class="slide-btn next" onclick="moveSlide(event,1)">›</button>
         </div>
-        <button class="slide-btn prev" onclick="moveSlide(-1)">‹</button>
-        <button class="slide-btn next" onclick="moveSlide(1)">›</button>
       </div>
+      <h3>Panda Bottle</h3>
+      <p class="price">₹399</p>
     </div>
-    <h3>Panda Bottle</h3>
-    <p class="price">₹399</p>
-    <div class="cart-action">
-      <button class="add-cart-btn" onclick="addToCart(this,'Panda Bottle',399,'images/accessories/pandabottle4.png')">Add to Cart</button>
-      <span class="added-msg">Added!</span>
-    </div>
-  </div>
+  </a>
+
 </section>
 
 <script>
+document.addEventListener("DOMContentLoaded", function(){
+
 let index=0;
 const track=document.getElementById("pandaTrack");
-const slides=track.children.length;
-function moveSlide(dir){
+const slides=track ? track.children.length : 0;
+
+/* prevent slider buttons from opening product page */
+window.moveSlide=function(e,dir){
+  e.preventDefault();
+  e.stopPropagation();
+  if(!track) return;
   index+=dir;
   if(index<0)index=slides-1;
   if(index>=slides)index=0;
   track.style.transform=`translateX(-${index*100}%)`;
 }
 
-/* Cart system same as apparels */
+/* Cart count (same system as other pages) */
 function getCart(){return JSON.parse(localStorage.getItem("cart"))||[];}
-function saveCart(cart){localStorage.setItem("cart",JSON.stringify(cart));updateCount();}
 function updateCount(){
   const cart=getCart();let totalQty=0;
   cart.forEach(i=>totalQty+=Number(i.qty||0));
-  document.getElementById("cart-count").innerText=totalQty;
+  const countEl=document.getElementById("cart-count");
+  if(countEl) countEl.innerText=totalQty;
 }
-
-function addToCart(btn,name,price,img){
-  price=Number(price);
-  let cart=getCart();
-  let item=cart.find(p=>p.name===name);
-  if(item){item.qty=Number(item.qty)+1;}
-  else{cart.push({name,price,img,qty:1});}
-  saveCart(cart);
-
-  const msg=btn.nextElementSibling;
-  msg.classList.add("show");
-  setTimeout(()=>msg.classList.remove("show"),900);
-}
-
 updateCount();
+
+});
 </script>
+
 </body>
 </html>
