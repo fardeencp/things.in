@@ -3,61 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Product - Things.in</title>
+<title>Product | Things.in</title>
 <link rel="stylesheet" href="css/style.css">
 
 <style>
-.product-page{
-  max-width:420px;
+.product-wrap{
+  max-width:900px;
   margin:40px auto;
+  padding:0 20px;
   text-align:center;
 }
 
-.product-page img{
+.product-img{
   width:100%;
-  max-height:420px;
+  max-width:420px;
+  margin:0 auto;
+  position:relative;
+}
+
+.product-img img{
+  width:100%;
   object-fit:cover;
-  border-radius:8px;
 }
 
-.product-page h2{margin:12px 0 6px;}
-.product-page .price{font-weight:bold;margin-bottom:10px;}
-
-.size-options button,
-.color-options div{
-  margin:5px;
-  cursor:pointer;
-}
-
-.size-options button{
-  padding:6px 12px;
-  border:1px solid #000;
-  background:white;
-}
-
-.size-options button.active{
-  background:black;
+.slide-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,0.3);
   color:white;
+  border:none;
+  padding:6px 10px;
+  cursor:pointer;
+  border-radius:50%;
 }
+.prev{left:-15px;}
+.next{right:-15px;}
+
+.product-name{margin-top:18px;font-size:22px;}
+.price{margin:8px 0 12px;color:#666;}
+.desc{max-width:500px;margin:0 auto 15px;color:#444;font-size:14px;}
+
+.options{margin:15px 0;}
+.size-btn{
+  padding:6px 12px;
+  border:1px solid #0a1f44;
+  background:white;
+  cursor:pointer;
+  margin:4px;
+}
+.size-btn.active{background:#0a1f44;color:white;}
 
 .color-box{
-  width:22px;height:22px;
-  display:inline-block;
-  border-radius:4px;
-  border:1px solid #ccc;
+  width:22px;height:22px;display:inline-block;
+  margin:6px;border-radius:3px;cursor:pointer;border:1px solid #ccc;
 }
+.yellow{background:#f5e27a;}
+.grey{background:#888;}
 
-#addBtn{
-  margin-top:14px;
-  padding:10px 20px;
-  border:none;
-  background:#0a1f44;
-  color:white;
+.add-cart{
+  margin-top:15px;
+  padding:10px 22px;
+  border:1px solid #0a1f44;
+  background:white;
   cursor:pointer;
-  display:block;
-  margin-left:auto;
-  margin-right:auto;
 }
+.added{
+  display:block;
+  margin-top:8px;
+  font-size:13px;
+  color:black;
+  opacity:0;
+  transition:opacity .3s;
+}
+.added.show{opacity:1;}
 </style>
 </head>
 
@@ -66,39 +85,36 @@
 <nav>
   <div class="logo"><a href="index.html" style="text-decoration:none;color:inherit;">Things.in</a></div>
   <div class="nav-links">
-    <a href="apparels.html">Apparels</a>
-    <a href="accessories.html">Accessories</a>
-    <a href="cart.html">🛒 <span id="cart-count">0</span></a>
+    <a href="cart.html">🛒</a>
   </div>
 </nav>
 
-<div class="product-page">
-  <img id="productImg">
-  <h2 id="productName"></h2>
-  <p class="price" id="productPrice"></p>
+<div class="product-wrap">
+  <div class="product-img">
+    <button class="slide-btn prev" onclick="moveSlide(-1)">‹</button>
+    <img id="mainImg">
+    <button class="slide-btn next" onclick="moveSlide(1)">›</button>
+  </div>
 
-  <div class="size-options" id="sizeBox"></div>
-  <div class="color-options" id="colorBox"></div>
+  <div class="product-name" id="name"></div>
+  <div class="price" id="price"></div>
+  <div class="desc" id="desc"></div>
 
-  <button id="addBtn">Add to Cart</button>
+  <div class="options" id="options"></div>
+
+  <button class="add-cart" id="cartBtn">Add to Cart</button>
+  <span class="added" id="addedMsg">Added!</span>
 </div>
 
 <script>
 const products = {
 
-  /* 👕 APPARELS EXAMPLES — ADD YOUR REAL ONES HERE */
-  "blackpants": {
-    name:"Loose Fit Pants",
-    price:899,
-    images:["images/apparels/blackpants.png"],
-    sizes:["S","M","L","XL"]
-  },
-
-  /* 🧴 ACCESSORY */
-  "pandabottle": {
-    name:"Panda Bottle",
-    price:399,
-    images:[
+  /* -------- ACCESSORY -------- */
+  pandabottle: {
+    name: "Panda Bottle",
+    price: 399,
+    description: "Cute panda insulated bottle for daily carry.",
+    images: [
       "images/accessories/pandabottle4.png",
       "images/accessories/pandabottle1.png",
       "images/accessories/pandabottle2.png",
@@ -106,73 +122,84 @@ const products = {
       "images/accessories/pandabottle5.png",
       "images/accessories/pandabottle6.png"
     ],
+    type: "accessory",
     colors:{
       yellow:"images/accessories/pandabottle3.png",
       grey:"images/accessories/pandabottle1.png"
     }
-  }
+  },
+
+  /* -------- APPARELS -------- */
+  animetshirt:{name:"Oversized Anime Printed Tshirt",price:449,description:"Comfort oversized tee.",images:["images/apparels/animetshirt.jpg"],type:"apparel"},
+  blackpant:{name:"Black Korean Pants",price:559,description:"Loose fit Korean pants.",images:["images/apparels/blackkoreanpant.jpg"],type:"apparel"},
+  brownpant:{name:"Brown Korean Pants",price:559,description:"Classic street fit.",images:["images/apparels/brownkoreanpant.jpg"],type:"apparel"},
+  creampant:{name:"Cream Korean Pants",price:559,description:"Soft neutral tone pants.",images:["images/apparels/creamkoreanpants.jpg"],type:"apparel"},
+  lightjeans:{name:"Light Blue Jeans",price:559,description:"Casual washed denim.",images:["images/apparels/lightbluejean.jpg"],type:"apparel"},
+  washedjeans:{name:"Washed Out Jeans",price:559,description:"Vintage faded style.",images:["images/apparels/washedoutjeans.png"],type:"apparel"},
+  whitetrack:{name:"White Bonkers Track",price:699,description:"Sporty fit track.",images:["images/apparels/whitebonkerstrack.png"],type:"apparel"},
+  greytrack:{name:"Grey Bonkers Track",price:699,description:"Relaxed comfort wear.",images:["images/apparels/greybonkerstrack.jpg"],type:"apparel"},
+  yellowsundress:{name:"Yellow Sundress",price:799,description:"Bright summer wear.",images:["images/apparels/yellowsundress.jpg"],type:"apparel"},
+  redsundress:{name:"Red Sundress",price:799,description:"Elegant casual dress.",images:["images/apparels/redsundress.png"],type:"apparel"},
+  bluesundress:{name:"Blue Sundress",price:799,description:"Soft blue flow dress.",images:["images/apparels/bluesundress.png"],type:"apparel"},
 };
 
-const params = new URLSearchParams(window.location.search);
-const productId = params.get("id");
+const id=new URLSearchParams(window.location.search).get("id");
+const p=products[id];
+if(!p){document.body.innerHTML="<h2 style='text-align:center;margin-top:50px;'>Product not found</h2>";}
 
-if(!products[productId]){
-  document.body.innerHTML="<h2 style='text-align:center;margin-top:50px'>Product not found</h2>";
-  throw new Error("Invalid product ID");
+document.getElementById("name").innerText=p.name;
+document.getElementById("price").innerText="₹"+p.price;
+document.getElementById("desc").innerText=p.description;
+
+let index=0;
+let imgs=p.images;
+const mainImg=document.getElementById("mainImg");
+mainImg.src=imgs[0];
+
+function moveSlide(d){
+  index+=d;
+  if(index<0)index=imgs.length-1;
+  if(index>=imgs.length)index=0;
+  mainImg.src=imgs[index];
 }
 
-const product = products[productId];
+/* OPTIONS */
+const opt=document.getElementById("options");
 
-const imgEl = document.getElementById("productImg");
-const nameEl = document.getElementById("productName");
-const priceEl = document.getElementById("productPrice");
-const sizeBox = document.getElementById("sizeBox");
-const colorBox = document.getElementById("colorBox");
-
-nameEl.textContent = product.name;
-priceEl.textContent = "₹"+product.price;
-imgEl.src = product.images[0];
-
-/* Sizes for apparels */
-if(product.sizes){
-  product.sizes.forEach(size=>{
-    const btn=document.createElement("button");
-    btn.textContent=size;
-    btn.onclick=()=>btn.classList.toggle("active");
-    sizeBox.appendChild(btn);
+if(p.type==="apparel"){
+  ["S","M","L","XL"].forEach(size=>{
+    const b=document.createElement("button");
+    b.innerText=size;
+    b.className="size-btn";
+    b.onclick=()=>{document.querySelectorAll(".size-btn").forEach(x=>x.classList.remove("active"));b.classList.add("active");}
+    opt.appendChild(b);
   });
 }
 
-/* Colors for accessories */
-if(product.colors){
-  Object.entries(product.colors).forEach(([color,img])=>{
+if(p.type==="accessory"){
+  Object.keys(p.colors).forEach(c=>{
     const box=document.createElement("div");
-    box.className="color-box";
-    box.style.background=color==="yellow"?"#ffe680":"#bbb";
-    box.onclick=()=>imgEl.src=img;
-    colorBox.appendChild(box);
+    box.className="color-box "+c;
+    box.onclick=()=>{mainImg.src=p.colors[c];}
+    opt.appendChild(box);
   });
 }
 
-/* Cart */
+/* CART */
 function getCart(){return JSON.parse(localStorage.getItem("cart"))||[];}
-function saveCart(cart){localStorage.setItem("cart",JSON.stringify(cart));updateCount();}
-function updateCount(){
-  const cart=getCart();let total=0;
-  cart.forEach(i=>total+=Number(i.qty||0));
-  document.getElementById("cart-count").innerText=total;
-}
-updateCount();
+function saveCart(c){localStorage.setItem("cart",JSON.stringify(c));}
 
-document.getElementById("addBtn").onclick=()=>{
+document.getElementById("cartBtn").onclick=()=>{
   let cart=getCart();
-  let item=cart.find(i=>i.name===product.name);
+  let item=cart.find(i=>i.name===p.name);
   if(item)item.qty++;
-  else cart.push({name:product.name,price:product.price,img:imgEl.src,qty:1});
+  else cart.push({name:p.name,price:p.price,img:mainImg.src,qty:1});
   saveCart(cart);
-  alert("Added to cart");
-};
-</script>
 
+  const m=document.getElementById("addedMsg");
+  m.classList.add("show");
+  setTimeout(()=>m.classList.remove("show"),900);
+}
+</script>
 </body>
 </html>
