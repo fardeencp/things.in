@@ -5,60 +5,68 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Product - Things.in</title>
 <link rel="stylesheet" href="css/style.css">
+
 <style>
 .product-page{
   max-width:420px;
   margin:40px auto;
   text-align:center;
 }
+
 .product-page img{
   width:100%;
   max-width:320px;
   margin:auto;
   display:block;
 }
+
 .product-name{font-size:20px;margin-top:12px;}
 .product-desc{font-size:14px;color:#555;margin-top:6px;}
+
 .size-select, .color-select{
   margin-top:10px;
   display:flex;
   justify-content:center;
   gap:10px;
 }
+
 .size-btn{
   padding:5px 10px;
   border:1px solid #0a1f44;
   cursor:pointer;
   font-size:13px;
 }
+
 .color-box{
   width:22px;height:22px;cursor:pointer;border:1px solid #aaa;
 }
 .yellow{background:#f5d76e;}
 .grey{background:#aaa;}
+
 .add-cart-btn{
   margin-top:14px;
   padding:8px 16px;
   border:1px solid #0a1f44;
   background:white;
   cursor:pointer;
-  color:#0a1f44; /* dark blue font for minimalistic look */
+  color:#0a1f44; /* dark blue text */
 }
+
 .cart-icon{position:relative;text-decoration:none;font-size:20px;}
 .cart-count{
   position:absolute;top:-8px;right:-10px;
   background:#0a1f44;color:white;
-  font-size:12px;padding:2px 6px;border-radius:50%;
+  font-size:12px;        /* match other pages */
+  font-family: Arial, sans-serif; /* match other pages */
+  font-weight:bold;       /* match other pages */
+  padding:2px 6px;border-radius:50%;
 }
 </style>
 </head>
 <body>
 
-<!-- NAVIGATION -->
 <nav>
-  <div class="logo">
-    <a href="index.html" style="text-decoration:none;color:#0a1f44;">Things.in</a>
-  </div>
+  <div class="logo"><a href="index.html" style="text-decoration:none;color:#0a1f44;">Things.in</a></div>
   <div class="nav-links">
     <a href="cart.html" class="cart-icon">🛒<span id="cart-count" class="cart-count">0</span></a>
   </div>
@@ -68,6 +76,7 @@
 
 <script>
 const products = {
+
   pandabottle:{
     name:"Panda Bottle",
     price:399,
@@ -84,6 +93,7 @@ const products = {
       "images/accessories/pandabottle3.png"
     ]
   },
+
   "anime-tshirt":{name:"Oversized Anime Printed Tshirt",price:449,desc:"Soft oversized streetwear fit.",img:"images/apparels/animetshirt.jpg"},
   "black-pant":{name:"Black Korean Pants",price:559,desc:"Minimal loose-fit trousers.",img:"images/apparels/blackkoreanpant.jpg"},
   "brown-pant":{name:"Brown Korean Pants",price:559,desc:"Earth-tone relaxed fit.",img:"images/apparels/brownkoreanpant.jpg"},
@@ -107,46 +117,56 @@ const container=document.getElementById("product-container");
 
 if(!p){
   container.innerHTML="<h2>Product not found</h2>";
-} else {
+} else{
   let mainImg=p.img || p.gallery[0];
-  let html=`<div style="position:relative;display:flex;justify-content:center;">
+
+  let html=`
+  <div style="position:relative;display:flex;justify-content:center;">
     <button onclick="prevImg()" style="position:absolute;left:10px;top:45%;font-size:28px;background:white;border-radius:50%;border:none;cursor:pointer;">‹</button>
     <img id="mainImg" src="${mainImg}" style="max-width:320px;">
     <button onclick="nextImg()" style="position:absolute;right:10px;top:45%;font-size:28px;background:white;border-radius:50%;border:none;cursor:pointer;">›</button>
   </div>
+
   <div class="product-name">${p.name}</div>
   <div class="product-desc">${p.desc}</div>
-  <div class="price">₹${p.price}</div>`;
+  <div class="price">₹${p.price}</div>
+  `;
 
+  /* COLOR BLOCKS */
   if(p.type==="accessory"){
-    html+=`<div style="display:flex;gap:12px;justify-content:center;margin-top:10px;">
+    html+=`
+    <div style="display:flex;gap:12px;justify-content:center;margin-top:10px;">
       <div onclick="selectColor('yellow')" style="width:18px;height:18px;background:#FFD84D;border:1px solid #000;cursor:pointer;"></div>
       <div onclick="selectColor('grey')" style="width:18px;height:18px;background:#777;border:1px solid #000;cursor:pointer;"></div>
     </div>`;
   }
 
+  /* SIZE FOR APPARELS */
   if(!p.type){
-    html+=`<div class="size-select">
+    html+=`
+    <div class="size-select">
       <div class="size-btn" onclick="selectSize(this,'S')">S</div>
       <div class="size-btn" onclick="selectSize(this,'M')">M</div>
       <div class="size-btn" onclick="selectSize(this,'L')">L</div>
     </div>`;
   }
 
-  html+=`<button class="add-cart-btn" onclick="addToCart()">Add to Cart</button>
-  <div id="addedMsg" style="opacity:0;font-size:13px;margin-top:6px;">Added ✓</div>`;
+  html+=`
+  <button class="add-cart-btn" onclick="addToCart()">Add to Cart</button>
+  <div id="addedMsg" style="opacity:0;font-size:13px;margin-top:6px;">Added ✓</div>
+  `;
 
   container.innerHTML=html;
 }
 
 /* IMAGE SLIDER */
 function prevImg(){
-  if(!p.gallery) return;
+  if(!p.gallery)return;
   currentIndex=(currentIndex-1+p.gallery.length)%p.gallery.length;
   document.getElementById("mainImg").src=p.gallery[currentIndex];
 }
 function nextImg(){
-  if(!p.gallery) return;
+  if(!p.gallery)return;
   currentIndex=(currentIndex+1)%p.gallery.length;
   document.getElementById("mainImg").src=p.gallery[currentIndex];
 }
@@ -168,7 +188,11 @@ function selectSize(el,size){
 /* CART */
 function getCart(){return JSON.parse(localStorage.getItem("cart"))||[];}
 function saveCart(c){localStorage.setItem("cart",JSON.stringify(c));updateCount();}
-function updateCount(){let t=0;getCart().forEach(i=>t+=i.qty);document.getElementById("cart-count").innerText=t;}
+function updateCount(){
+  let t=0;
+  getCart().forEach(i=>t+=i.qty);
+  document.getElementById("cart-count").innerText=t;
+}
 
 function showAdded(){
   const m=document.getElementById("addedMsg");
@@ -177,26 +201,23 @@ function showAdded(){
 }
 
 function addToCart(){
-  if(!p.type && !selectedSize){
-    alert("Select size");
-    return;
-  }
-  if(p.type==="accessory" && !selectedColor){
-    alert("Select color");
-    return;
-  }
+  // Require size for apparels or color for accessories
+  if(!p.type && !selectedSize){ alert("Select size"); return; }
+  if(p.type==="accessory" && !selectedColor){ alert("Select color"); return; }
 
-  let img = p.type==="accessory" ? p.colors[selectedColor] : p.img;
-  let name = p.type==="accessory" ? `${p.name} (${selectedColor})` : (selectedSize ? `${p.name} (${selectedSize})` : p.name);
+  let img=p.type==="accessory"?p.colors[selectedColor]:p.img;
+  let name=p.name + (selectedSize ? ` (${selectedSize})` : "") + (selectedColor ? ` (${selectedColor})` : "");
 
   let c=getCart();
   let it=c.find(i=>i.name===name);
   if(it) it.qty++;
-  else c.push({name,price:p.price,img,qty:1});
+  else c.push({name, price:p.price, img, qty:1});
+
   saveCart(c);
   showAdded();
 }
 
+// Update cart count on page load
 updateCount();
 </script>
 
