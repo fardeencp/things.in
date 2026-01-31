@@ -42,6 +42,7 @@
   border:1px solid #0a1f44;
   background:white;
   cursor:pointer;
+  color:#0a1f44; /* dark blue font for minimalistic look */
 }
 .cart-icon{position:relative;text-decoration:none;font-size:20px;}
 .cart-count{
@@ -80,9 +81,7 @@ const products = {
       "images/accessories/pandabottle4.png",
       "images/accessories/pandabottle1.png",
       "images/accessories/pandabottle2.png",
-      "images/accessories/pandabottle3.png",
-      "images/accessories/pandabottle5.png",
-      "images/accessories/pandabottle6.png",
+      "images/accessories/pandabottle3.png"
     ]
   },
   "anime-tshirt":{name:"Oversized Anime Printed Tshirt",price:449,desc:"Soft oversized streetwear fit.",img:"images/apparels/animetshirt.jpg"},
@@ -179,11 +178,11 @@ function showAdded(){
 
 function addToCart(){
   if(!p.type && !selectedSize){
-    alert("Please Select a size");
+    alert("Select size");
     return;
   }
   if(p.type==="accessory" && !selectedColor){
-    alert("Please Select a color");
+    alert("Select color");
     return;
   }
 
