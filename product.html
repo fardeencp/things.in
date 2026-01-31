@@ -120,8 +120,7 @@ else{
 
   let mainImg=p.img || p.gallery[0];
 
-  let html=`
-  <div style="position:relative;display:flex;justify-content:center;">
+  let html=`<div style="position:relative;display:flex;justify-content:center;">
     <button onclick="prevImg()" style="position:absolute;left:10px;top:45%;font-size:28px;background:white;border-radius:50%;border:none;cursor:pointer;">‹</button>
     <img id="mainImg" src="${mainImg}" style="max-width:320px;">
     <button onclick="nextImg()" style="position:absolute;right:10px;top:45%;font-size:28px;background:white;border-radius:50%;border:none;cursor:pointer;">›</button>
@@ -129,35 +128,31 @@ else{
 
   <div class="product-name">${p.name}</div>
   <div class="product-desc">${p.desc}</div>
-  <div class="price">₹${p.price}</div>
-  `;
+  <div class="price">₹${p.price}</div>`;
 
-  /* COLOR BLOCKS */
-  if(p.type==="accessory"){
-    html+=`
+/* COLOR BLOCKS */
+if(p.type==="accessory"){
+  html+=`
     <div style="display:flex;gap:12px;justify-content:center;margin-top:10px;">
       <div onclick="selectColor('yellow')" style="width:18px;height:18px;background:#FFD84D;border:1px solid #000;cursor:pointer;"></div>
       <div onclick="selectColor('grey')" style="width:18px;height:18px;background:#777;border:1px solid #000;cursor:pointer;"></div>
     </div>`;
-  }
+}
 
-  /* SIZE FOR APPARELS */
-  if(!p.type){
-    html+=`
+/* SIZE FOR APPARELS */
+if(!p.type){
+  html+=`
     <div class="size-select">
       <div class="size-btn" onclick="selectSize(this,'S')">S</div>
       <div class="size-btn" onclick="selectSize(this,'M')">M</div>
       <div class="size-btn" onclick="selectSize(this,'L')">L</div>
     </div>`;
-  }
-
-  html+=`
-  <button class="add-cart-btn" onclick="addToCart()">Add to Cart</button>
-  <div id="addedMsg" style="opacity:0;font-size:13px;margin-top:6px;">Added ✓</div>
-  `;
-
-  container.innerHTML=html;
 }
+
+html+=`<button class="add-cart-btn" onclick="addToCart()">Add to Cart</button>
+<div id="addedMsg" style="opacity:0;font-size:13px;margin-top:6px;">Added ✓</div>`;
+
+container.innerHTML=html;
 
 /* IMAGE SLIDER */
 function prevImg(){
@@ -199,12 +194,19 @@ function showAdded(){
 function addToCart(){
   if(!p.type && !selectedSize){alert("Select size");return;}
 
+  // ✅ Updated name logic for accessories and apparels
+  let name;
+  if(p.type==="accessory"){
+    name = p.name + ` (${selectedColor})`;
+  } else {
+    name = p.name + (selectedSize ? ` (${selectedSize})` : "");
+  }
+
   let img=p.type==="accessory"?p.colors[selectedColor]:p.img;
-  let name=p.name+(selectedSize?` (${selectedSize})`:"");
 
   let c=getCart();
   let it=c.find(i=>i.name===name);
-  if(it)it.qty++;
+  if(it) it.qty++;
   else c.push({name,price:p.price,img,qty:1});
 
   saveCart(c);
