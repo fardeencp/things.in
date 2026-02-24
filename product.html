@@ -194,7 +194,6 @@ function selectSize(el,size){
   el.style.background="#0a1f44";
   el.style.color="white";
 }
-
 /* CART */
 function getCart(){return JSON.parse(localStorage.getItem("cart"))||[];}
 function saveCart(c){localStorage.setItem("cart",JSON.stringify(c));updateCount();}
