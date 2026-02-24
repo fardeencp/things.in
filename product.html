@@ -51,6 +51,18 @@
   cursor:pointer;
   color:#0a1f44; /* dark blue text */
 }
+
+  .color-box{
+  width:20px;
+  height:20px;
+  border:1px solid #aaa;
+  cursor:pointer;
+}
+
+.color-box.active{
+  outline:2px solid #0a1f44;
+  outline-offset:2px;
+}
   
 </style>
 </head>
@@ -162,8 +174,14 @@ function nextImg(){
 }
 
 /* COLOR SWITCH */
-function selectColor(color){
+function selectColor(el,color){
   selectedColor=color;
+
+  document.querySelectorAll(".color-box")
+    .forEach(b=>b.classList.remove("active"));
+
+  el.classList.add("active");
+
   document.getElementById("mainImg").src=p.colors[color];
 }
 
