@@ -171,7 +171,12 @@ function selectColor(color){
 /* SIZE */
 function selectSize(el,size){
   selectedSize=size;
-  document.querySelectorAll(".size-btn").forEach(b=>b.style.background="white");
+
+  document.querySelectorAll(".size-btn").forEach(b=>{
+    b.style.background="white";
+    b.style.color="#0a1f44";   // ← reset text color
+  });
+
   el.style.background="#0a1f44";
   el.style.color="white";
 }
